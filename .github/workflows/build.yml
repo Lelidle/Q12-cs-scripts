@@ -25,7 +25,7 @@ jobs:
         id: cache-packages-restore
         uses: actions/cache/restore@v3
         with:
-          path: /home/runner/.cache/typst
+          path: ${{ github.workspace }}/.cache/typst
           key: cached-packages
           restore-keys: |
             cached-packages-
@@ -35,7 +35,7 @@ jobs:
         with:
           # typst has an official container image based an Alpine
           image: ghcr.io/typst/typst:latest
-          options: -v ${{ github.workspace }}:/root/work -v /home/runner/.cache:/root/.cache
+          options: -v ${{ github.workspace }}:/root/work -v ${{github.workspace }}/.cache:/root/.cache
           # which doesn't have make by default, so it needs to be added
           run: |
             apk add make
@@ -48,8 +48,8 @@ jobs:
         id: cache-packages-save
         uses: actions/cache/save@v3
         with:
-          path: /home/runner/.cache/typst
-          key: cached-packages-${{ hashFiles('/home/runner/.cache/typst/**/*') }}
+          path: ${{ github.workspace }}/.cache/typst
+          key: cached-packages-${{ hashFiles('.cache/typst/**/*') }}
 
       - name: Create artifacts
         uses: actions/upload-artifact@v3
