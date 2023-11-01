@@ -25,7 +25,7 @@ jobs:
         id: cache-packages-restore
         uses: actions/cache/restore@v3
         with:
-          path: $HOME/.cache/typst
+          path: .cache/typst
           key: cached-packages
 
       - name: Compile Typst to PDF.
@@ -33,7 +33,7 @@ jobs:
         with:
           # typst has an official container image based an Alpine
           image: ghcr.io/typst/typst:latest
-          options: -v ${{ github.workspace }}:/root/work -v $HOME/.cache:/root/.cache
+          options: -v ${{ github.workspace }}:/root/work -v .cache:/root/.cache
           # which doesn't have make by default, so it needs to be added
           run: |
             apk add make
