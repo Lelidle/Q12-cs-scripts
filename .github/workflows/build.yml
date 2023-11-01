@@ -23,10 +23,12 @@ jobs:
 
       - name: Restore cached package downloads
         id: cache-packages-restore
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: /home/runner/.cache/typst
-          key: cached-packages-${{ hashFiles('/home/runner/.cache/typst/**/*')}}
+          key: cached-packages
+          restore-keys: |
+            cached-packages-
 
       - name: Compile Typst to PDF.
         uses: addnab/docker-run-action@v3
@@ -41,6 +43,13 @@ jobs:
             cd /root/work
             make clean
             make all
+
+      - name: Restore cached package downloads
+        id: cache-packages-save
+        uses: actions/cache/save@v3
+        with:
+          path: /home/runner/.cache/typst
+          key: cached-packages-${{ hashFiles('/home/runner/.cache/typst/**/*') }}
 
       - name: Create artifacts
         uses: actions/upload-artifact@v3
