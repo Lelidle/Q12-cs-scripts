@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: /home/runner/.cache/typst
-          key: cached-packages
+          key: cached-packages-${{ hashFiles('/home/runner/.cache/typst/**/*')}}
 
       - name: Compile Typst to PDF.
         uses: addnab/docker-run-action@v3
