@@ -1,0 +1,8 @@
+Auswahl = 'a' | B.
+Option = 'a' ['c'].
+Wiederholung = {D}.
+MinEins = 'e' {'e'}.
+MinEinsUnterschiedlich = 'f'{'g' 'f'}.
+Oder = {'h' | 'k'}.
+B = B
+D = D

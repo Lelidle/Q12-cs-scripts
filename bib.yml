@@ -1,0 +1,12 @@
+hoffmann:
+    type: Book
+    author:
+        - Hoffmann, Dirk W.
+    title:
+        value: "Theoretische Informatik"
+        verbatim: true
+    date: 2018
+    page-total: 431
+    publisher: Carl Hanser Verlag
+    location: München
+    isbn: 978-3446457935
