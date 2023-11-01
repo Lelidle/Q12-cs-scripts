@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Check out repository.
         uses: actions/checkout@v3
-        
+
       - name: Restore cached package downloads
         id: cache-packages-restore
         uses: actions/cache/restore@v3
@@ -33,7 +33,7 @@ jobs:
         with:
           # typst has an official container image based an Alpine
           image: ghcr.io/typst/typst:latest
-          options: -v ${{ github.workspace }}:/root/work
+          options: -v ${{ github.workspace }}:/root/work -v ~/.cache:/root/.cache
           # which doesn't have make by default, so it needs to be added
           run: |
             apk add make
@@ -46,7 +46,7 @@ jobs:
         id: cache-packages-save
         uses: actions/cache/save@v3
         with:
-          path: ~/.cache/typst
+          path: /root/.cache/typst
           key: ${{ steps.cache-packages-restore.outputs.cache-primary-key }}
 
       - name: Create artifacts
