@@ -20,6 +20,14 @@ jobs:
     steps:
       - name: Check out repository.
         uses: actions/checkout@v3
+        
+      - name: Restore cached package downloads
+        id: cache-packages-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: ~/.cache/typst
+          key: cached-packages
+
       - name: Compile Typst to PDF.
         uses: addnab/docker-run-action@v3
         with:
@@ -33,6 +41,14 @@ jobs:
             cd /root/work
             make clean
             make all
+
+      - name: Cache package downloads
+        id: cache-packages-save
+        uses: actions/cache/save@v3
+        with:
+          path: ~/.cache/typst
+          key: ${{ steps.cache-packages-restore.outputs.cache-primary-key }}
+
       - name: Create artifacts
         uses: actions/upload-artifact@v3
         with:
