@@ -3,7 +3,7 @@
 DIRECTORY=./
 EXTENSION=.typ
 COMPILE_EXTENSION=.pdf
-FILES=$(shell find $(DIRECTORY) -type f -name '*$(EXTENSION)')
+FILES=$(shell find $(DIRECTORY) -type f -name '*$(EXTENSION)' -not -path './.cache/*')
 COMPILED_FILES=$(patsubst %$(EXTENSION), %$(COMPILE_EXTENSION), $(FILES))
 
 RM=rm
