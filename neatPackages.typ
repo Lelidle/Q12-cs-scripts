@@ -8,7 +8,7 @@
 #import "@preview/syntree:0.1.0": *
 #import "@preview/showybox:1.1.0": *
 #import "@preview/cetz:0.1.0"
-#import "@preview/finite:0.1.0": automaton
+#import "@preview/finite:0.3.0": automaton
 
 
 #automaton((
