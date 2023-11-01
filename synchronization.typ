@@ -267,6 +267,8 @@ Auch hier ist der Name wieder selbsterklärend.
 #image("images/token_ring_topologie.png", width: 80%)
 \ Token - Ring Topologie] ])
 
+#kq[I know that it is probably not important today, but I did not really understand the difference in da Token and non token setup. Do we just use fixed transmission rates with da second one here so there is always a Token that we get or not get?]
+
 1. Der Ausfall jedes Geräts unterbricht den Ring, führt aber nicht zu einem Totalausfall des Netzes. 
 2. Der Aufwand bei einer Fehler ist hoch, die Erweiterung geringfügig umständlicher als bei den vorherigen Topologien.
 3. Es gibt keine besonders teuren Komponenten.
@@ -293,6 +295,7 @@ DODO Bild
 
 = Protokolle 
 
+== Grundlagen
 Damit Kommunikation sinnvoll ablaufen kann müssen die "Spielregeln" der Kommunikation eindeutig festgelegt werden. Die Vereinbarungen für die technische Kommunikation sind in *Protokollen* festgehalten, die wiederum in den RFCs (siehe oben) spezifiziert werden. 
 
 Bevor wir uns detaillierter mit einzelnen Protokollen beschäftigen hier ein exemplarischer Ablauf einer Client-Server-Sitzung: 
@@ -319,8 +322,8 @@ Da auf jedem Rechner *viele Prozesse* ablaufen, die gegebenenfalls aber alle Dat
 - http: hypertext transfer protocol: 80
 - https: hypertext transfer protocol secure: 443
 - FTP: file transfer protocol: 21
-- POP3: post office protocol 3: 11ß
-- SMTP
+- POP3: post office protocol 3: 110
+- SMTP: Simple mail transfer protocol: 25
 
 *Zu Datenpaketen*
 
@@ -334,8 +337,46 @@ Neben den eigentlichen Daten, die Übertragen werden sollen, werden in der Regel
 - Timestamps
 - Infos über die Größe des Pakets oder die Größe des Headers. 
 
+== TCP/IP
+== Ethernet
+#kq[Those two are only mentioned here briefly with their RFCs, I would say those are good to look at a bit more? Or would you rather e.g. look at http? In general this whole section feels very fuzzy to me, I am not content with how da colleague did this, cause I did not feel I learned something maself^^]
+
 
 = Das Schichtenmodell
+
+Die Übertragung von Daten kann sich auf mehreren Ebenen abspielen, die häufig sogar scharf voneinander getrennt werden können. Zur Beschreibung dieser einzelnzen Ebenen wird in der Netzwerktechnik das *OSI-Modell* verwendet (Open System Interconnection model). Im Abitur ist es üblich, dass nicht direkt ein technisches Beispiel bearbeitet wird, sondern ein Analogon. Deswegen soll auch hier mit einer Analogie begonnen werden: 
+
+Das folgende Beispiel stellt den Versand eines Pakets vom Schulleiter unserer Schulleiter zu einem anderen Schulleiter dar: 
+#align(center)[
+#image("images/paketversand.png")
+]
+
+Die durchgezogenen Pfeile zeigen dabei den physikalischen Datenfluss (hier rot), d.h. in diesem Beispiel das Paket, das durch die verschiedenen Stationen wandert. 
+
+Für unser Schichtemodell besonders interessant sind aber die weiteren Ebenen. Denn auch hier findet Kommunikation statt, die indirekt in den physischen Daten mit eingebettet sind. Das könnte beispielsweise so aussehen: 
+
+#align(center)[
+#image("images/paketversand_2.png")
+]
+
+1. Der Schulleiter wird in aller Regel ein persönliches Anschreiben beigelegt haben, das von seinem Kollegen gelesen wird.
+2. Das Sekretariat des WGG muss das Paket addressieren, damit es einerseits von der Post korrekt zugestellt werden kann, andererseits gehen Pakete an Schulen zunächst im Sekretariat ein, d.h. die Weiterleitung an den Schulleiter geschieht durch das Sekretariat des AEG. 
+3. Die Postfiliale Neumarkt muss das Paket korrekt ettiketieren, damit die Weiterleitung nach München korrekt funktioniert. 
+
+Man kann jetzt eine (gewisse) Analogie zwischen diesem Schichtenmodell beim Postversand und der Kommunikation zwischen zwei Computern ziehen. Dies führt uns auf die Namen einiger Schichten des OSI-Modells: 
+
+
+#align(center)[
+#image("images/paketversand_3.png")
+]
+
+Die *Übertragunsschicht* ist für den eigentlichen physikalischen Transport (zumindest in diesem Beispiel den Hauptteil des Weges) verantwortlich. 
+
+Die *Vermittlungsschicht* ist für die Weitervermittlung und die Wegewahl verantwortlich (Routing)
+
+Die *Transportschicht* ist für das zuverlässige Senden und Empfangen, sowie für die Vollständigkeit der Daten zuständig.
+
+Die *Anwendungsschicht* ist dann das eigentliche Ziel, d.h. hier der Informationsaustausch zwischen den Schulleitern. 
 
 
 = Nebenläufige Prozesse 
