@@ -676,7 +676,7 @@ Bisher haben wir nur an der Oberfläche der Sprachlehre gekratzt. Die bereits ei
 
 Dabei gibt es einen direkten Zusammenhang zwischen den Eigenschaften der Produktionsregeln der *Grammatik* und den Eigenschaften der von ihr erzeugten Sprache *L(G)*. 
 
-Der amerikanische Sprachwissenschaftler Noam Chomsky hat ein Klassifikationssystem entwickelt, das vier Arten von formalen Grammatiken und damit von formalen Sprachen definiert (#cite("hoffmann") S. 169).
+Der amerikanische Sprachwissenschaftler Noam Chomsky hat ein Klassifikationssystem entwickelt, das vier Arten von formalen Grammatiken und damit von formalen Sprachen definiert (#cite(<hoffmann>) S. 169).
 
 #align(center)[#image("images/chomsky.png", width: 70%)]
 
@@ -689,21 +689,21 @@ Um die Unterschiede der Sprachen besser beleuchten zu können, ist eine allgemei
 3. der endlichen Menge _P_ von _produktionen (Regeln)_ und 
 4. der _Startvariablen S_ mit $ S in V$.
 
-Jede Produktion aus _P_ hat die Form $l -> r$ mit $l in (V union Sigma)^+$ und $r in (V union Sigma)^*$ (#cite("hoffmann"), S. 164).
+Jede Produktion aus _P_ hat die Form $l -> r$ mit $l in (V union Sigma)^+$ und $r in (V union Sigma)^*$ (#cite(<hoffmann>), S. 164).
 ]
 
 Der Wesentliche Unterschied liegt - neben der noch mathematischeren Notation - in den erlaubten Produktionsregeln. Die linke Seite einer Regel kann im Allgemeinen nicht nur ein Nichtterminalsymbol enthalten, sondern mindestens ein Terminal oder Nichtterminalsymbol. Das erweitert unsere Möglichkeiten beträchtlich!
 
 #pagebreak()
 
-Damit lässt sich die Klassifikation mit Leben füllen (#cite("hoffmann"), S. 169):
+Damit lässt sich die Klassifikation mit Leben füllen (#cite(<hoffmann>), S. 169):
 
 1. *Phrasenstrukturgrammatiken (Typ-0-Grammatiken)* \ Jede Grammatik, die die obere Definition erfüllt ist automatisch eine Typ-0-Grammatik. Es gibt insbesondere keine weiteren Einschränkungen für die Produktionsregeln.
 2. *Kontextsensitive Grammatiken (Typ-1-Grammatiken)* \ Bei kontextsensitiven Grammatiken muss $|r| >= |l|$ gelten, d.h. die rechte Seite muss mindestens so lang sein, wie die linke Seite der Produktionsregel (einzige Ausnahme: $S -> epsilon$, dann darf $S$ aber in keiner rechten Seite vorkommen!)
 3. *Kontextfreie Grammatiken (Typ-2-Grammatiken)* \ Zusätzlich zu der vorherigen Einschränkung darf jetzt auf der linken Seite nur noch ein einziges Nonterminal stehen (d.h. unsere Grammatikdefinition entspricht kontextfreien Sprachen).
 4. *Reguläre Grammatiken (Typ-3-Grammatiken)* \ Die speziellsten Grammatiken, sie sind kontextfrei und besitzen zusätzlich die Eigenschaft, dass die rechte Seite einer Regel entweder $epsilon$ ist oder ein Terminalsymbol gefolgt von einem Nichtterminalsymbol. 
 
-*Beispiele* (#cite("hoffmann"), S. 169ff.)
+*Beispiele* (#cite(<hoffmann>), S. 169ff.)
 
 1. $L_3 := {(\a\b)^n | n in NN^+}$ ist eine *reguläre Sprache*. #hinweis[Der Exponent steht hier für eine Wiederholung, d.h. hier betrachten wir Wörter wie $\a\b, \a\b\a\b, #dots$] Mögliche Produktionsregeln sind: $ &(1) #h(2pt) S -> \a\B \ &(2)#h(2pt) B -> \b \ &(3) #h(2pt) B -> \bC \ &(4) #h(2pt)C -> \a\B $ \ Ableitung von $\a\b\a\b$: $ S ->^((1)) \aB ->^((3)) \a\b\C ->^((4)) \a\b\a\B ->^((2)) \a\b\a\b $ Das Wort wird also von links nach rechts "aufgebaut". Man spricht deswegen auch von einer "*rechts-linearen Grammatik*".
 2. $L_2 := {a^n b^n | n in NN^+}$ ist eine *kontextfreie Sprache*, aber nicht regulär. Die Sprache ist nicht mehr regulär, da wir in irgendeiner Form "zählen" müssten, wie viele a's es gibt, bevor die b's beginnen. Das ist mit den Regeln für reguläre Grammatiken nicht möglich. \ Eine mögliche Produktionsregel ist: $ &(1) #h(2pt) S -> \a\S\b | \a\b $ 
