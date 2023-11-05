@@ -1,6 +1,5 @@
 #import "@preview/showybox:1.1.0": showybox
 
-#let dots = [$dot dot dot$]
 #let xAchse = [$x-$Achse]
 #let yAchse = [$y-$Achse]
 

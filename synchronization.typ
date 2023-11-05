@@ -378,7 +378,6 @@ Man kann jetzt eine (gewisse) Analogie zwischen diesem Schichtenmodell beim Post
 [*Transport*],[Senden und Empfangen, Adressierung],[Zuverlässiges Senden und Empfangen, Überprüfung auf Vollständigkeit, Unterteilung in Datenpakete, Weitergabe an die richtige Anwendung],
 [*Vermittlung*], [Weitervermittlung und Wegewahl (Routing)], [Routing innerhalb des Netzwerks, Steuerung bei Staus, Verbindung zu anderen Teilnetzen],
 [*Übertragung* ], [physikalischer Transport (zumindest den Hauptteil des Weges) des Paketes.], [physikalischer Transport der Daten, Definition der physikalischen Signale, Aufteilung der Leitung, Übergabe der Daten an die Leitung],
-
 )
 
 #kq[Wieder die Frage: welche konkrete Protokoll Familie würde man hier jetzt am geschicktesten Anschauen?]
