@@ -27,8 +27,7 @@
 )
 
 
-= Internet und Adressierung
-== Historisches
+= Historisches
 
 Das *Internet* entstand primär aus dem 1969 entwickelten ARPANET (Advanced Research Project Agency Networkt) Projekt an dem vier US-Amerikanische Universitäten beteiligt waren, deren Ziel die weitläufige Vernetzung von Rechnern zur gemeinsamen Nutzung von Ressourcen war. Die Idee größere Netzwerke aufzubauen stammte dabei schon aus den Anfängen der 1960er Jahre und viele Gruppen forschten und arbeiteten daran (z.B. auch das US Militär). Dieses Projekt war auch eines der ersten, die das *TCP/IP* Protokoll implementiert haben (#link("https://www.ietf.org/rfc/rfc9293.html")[RFC 9293] - der aktuelle Standard).
 
@@ -40,7 +39,7 @@ Im Abitur spielt die Netzwerktechnik nur eine sehr untergeordnete Rolle. Dieses 
 
 #pagebreak()
 
-== Wiederholung Bits, Bytes und Hex
+= Wiederholung Bits, Bytes und Hex
 
 In der Informatik werden andere *Stellenwertsysteme* als in der schulüblichen Mathematik verwendet. Während dort das Zehnersystem Einzug gehalten hat ist für Computer das Zweiersystem geeignet (Strom an, Strom aus!).
 
@@ -138,7 +137,7 @@ Ein *Netzwerkprotokoll* ist dann ein Kommunikationsprotokoll für den Austausch 
 
 Es gibt immens viele Protokolle in der technischen Welt, neben den oben bereits erwähnten ließe sich noch eine viel längere Liste ergänzen: *DHCP, DNS, HTTPS, TCP, UDP, IP, SMTP, POP3, IMAP, etc.*
 
-== Das OSI-Modell
+= Das OSI-Modell
 
 Schlägt man ein beliebiges Buch oder einen Text zur Netwerkprogrammierung auf, so ist die Wahrscheinlichkeit auf das OSI-(open Systems Interconnection) Modell zu stoßen sehr groß. Wir werden es zunächst in seiner vollen Pracht bewundern, dann auf das für die Schule notwendige herunterbrechen und zuletzt einen Schnelldurchlauf durch die verschiedenen Schichten des Modells absolvieren.
 
@@ -227,11 +226,11 @@ Merkt man sich die obigen Fakten ohne weitere Details, so kommt man bei Abiturau
 
 #pagebreak()
 
-== Übertragungsschicht
+= Übertragungsschicht
 
 Die unterste Schicht beschäftigt sich, wie bereits erwähnt, mit der physikalischen Übertragung der Daten und ist für uns nur von geringem Interesse. Nur ein Aspekt ist von Relevanz:
 
-*Topologie von Rechnernetzen*
+== Topologie von Rechnernetzen
 
 
 Geräte können auf verschiedene Arten miteinander verbunden werden, die jeweils verschiedene Vor- und Nachteile haben. Man spricht bei einer "Verbundart" auch von einer *Topologie*.
@@ -302,8 +301,184 @@ Bei dieser Bauart ist jeder Rechner mit jedem anderen verbunden.
 
 *Kombinationen*
 
-Natürlich sind auch Kombinationen verschiedener Arten von Rechnernetzen möglich
+Natürlich sind auch Kombinationen verschiedener Arten von Rechnernetzen möglich!
 
+
+
+== Ethernet-Protokoll
+
+Auf diesem Level spielt bereits das *Ethernet*-Protokoll eine Rolle, dass auch den meisten nicht-technisch versierten Personen ein Begriff ist. Es ist ein Standard für die Kommunikation in kabelgebundenen Netzwerken (LAN).
+
+Bei diesem Verweis soll es an dieser Stelle bleiben, für die Interessierten findet sich als Ausgangspunkt für weitere Recherchen ein Ethernet II frame (d.h. der Aufbau eines Ethernet-Protokoll-Datenpakets):
+
+#align(center)[#image("/images/ethernet_frame.png")]
+
+= Vermittlungsschicht
+
+Es ist natürlich nicht ausreichend, dass physikalische Leitungen vorhanden sind. Datenpakete müssen auch den Weg durch das Netzwerk finden, um zum entsprechenden Ziel zu kommen, hier kommen Begriffe wie die *IP-Adresse*, *Routing* und entsprechende Geräte wie der *Router* ins Spiel.
+
+== IP-Adressen
+
+*IP(v4)* ist die erste Version des Internet Protocols, das weltweit verbreitet und eingesetzt wurde. Eine solche IP-Adresse besteht aus einer 32-stelligen Binärzahl, die jeweils einem Netzwerkadapters im Internet zugeordnet ist und so eine Identifizierung möglich macht, da sie im betreffenden Netwerk eindeutig ist. Netwerken von z.B. Providern wird dann ein ganzer Block an Adressen zugeordnet (siehe unten).
+
+#hinweis[*Für die Experten*: streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass Ip-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner sogenannten *MAC-Adresse* (Media-Access-Contro-Address, auch *physische Adresse*) - also die Nummer, die diesem Netzwerkadapter als Identifikator dient.]
+
+Zur besseren Lesbarkeit wird die Adresse üblicherweise in vier 8-stellige Blöcke aufgeteilt und (für den Menschen) dann in Dezimalschreibweise abgebildet werden - jeweils durch einen Punkt getrennt.
+
+*Beispiel*
+
+$ 01101100001000010000111100110111 $
+$ 01101100#hm 00100001#hm 00001111#hm 00110111 $
+$ 108 . 33 . 15 . 55 $
+
+#task(customTitle: "Kurze Denkaufgabe!")[Wie viele solcher IP-Adressen können gebildet werden?]
+
+Es sind natürlich $2^(32)$, also etwa $4,3$ Millarden Adressen.
+
+<AufgabeIP>
+#task[Wandeln Sie jeweils von Binär- in Dezimaldarstellung oder umgekehrt um:
+- $88.215.213.26$
+- $0101#hm 1000 #hm 0110 #hm 0011 #hm 0011 #hm 1111 #hm 1001 #hm 0011 $
+#link(<LösungIP>)[Zur Lösung]
+]
+
+*IP(v6)* Da die Anzahl der möglichen IPv4-Adressen doch recht klein ist im Vergleich zu der Anzahl an Geräten und Netwerken wurde ein neuer Standard entwickelt. Die Adressen in diesem Standard sind $128$ Bit lang, somit gibt es $2^(128)$ unterschiedliche IPv6-Adressen.
+
+Hier kommt auch die hexadezimale Darstellung ins Spiel, denn die Größe der Zahlen macht es sonst wieder unlesbar. Die Adresse wird also in 8 Blöcke zu je 16 Bit eingeteilt, die wiederum hexadezimal kodiert werden, a.so z.B.:
+
+$ 2600:1\f18:001f:\d\b00:807b:\f1\f4:\d01b:30\b1 $
+
+#hinweis[Ob dieses Format wirklich lesbarer ist oder wirklich sein muss sei einmal dahingestellt..]
+
+Die Tatsache, dass IPv6 Adressen noch nicht "der Standard" ist liegt an zweierlei:
+1. Es gab andere technische "Tricks", mit denen die Limitierung von IPv4 abgefedert wurde.
+2. Es braucht Zeit, bis sich Dinge durchsetzen, die neu sind. (Es sei nochmal darauf hingewiesen, dass in vielen Betrieben Java 8 der Standard ist z.B.)
+
+== Adressvergabe
+
+IP-Adressblöcke werden an Unternehmen und Organisationen vergegeben, die diese ihrerseits wieder verteilen können.
+
+*Vergebene Adressblöcke*:Findet man z.B. #link("https://ftp.ripe.net/ripe/stats/membership/alloclist.txt")[hier]
+
+Die Einträge sind dabei folgendermaßen zu lesen: *$84.39.64.0\/19$*
+
+Die Zahl 19 bedeutet hier: Für alle Adressen aus dem Adressblock gilt, dass die ersten 19 Bit fest vorgegeben sind (der sogenannte "Netz Anteil") und die restlichen Stellen (also der Anteil des Hosts) verwendet werden kann, d.h. die rot markierten Stellen sind fix:
+
+$ 84.39.64.0 = #text(red)[xxxx #hm xxxx . xxxx #hm xxxx . #hm xxx]"x" #hm "xxxx. xxxx xxxx"  $
+
+
+#task(customTitle: "Kurze Denkaufgabe")[Wie viele Adressen umfasst damit der Adressblock aus dem Beispiel, d.h. wie viele Adressen kann der Kunde hier nutzen]
+
+Da 13 Bit für den Kunden verfügbar sind, kann er $2^(13)$ Adressen verwenden, also alle Adressen von $94.39.64.0$ bis $84.39.95.255$
+
+#hinweis[*Für die Experten*: Stren genommeng sind nur $2^13 - 2$ Adressen verwendbar, da es zwei "spezielle" Adressen gibt:
+1. Sind alle schwarzen x gleich 0, dann spricht man von der *Network Identifier Adress*, die zur Identifizierung des Netzwerks verwendet wird.
+2. Sind alle schwarzen x gleich 1, dann spricht man von der *Broadcast Adress* - Datenpakete, die an diese Adresse gehen werden kopiert und zu allen Adressen im Netzwerk weitergeleitet. ]
+
+Bei der Notation mit dem Slash spricht man auch von der *CIDR*-Notation (Classless Inter-Domain Routing), die das Konzept der #link("https://de.wikipedia.org/wiki/Netzklasse")[Netzklassen] abgelöst hat.
+
+In der #link("https://www.rfc-editor.org/rfc/rfc1918")[RFC 1918] werden außerdem bestimmte Adressblöcke für private Netze festgelt.
+
+#hinweis(customTitle: "Zitat")[The Internet Assigned Numbers Authority (IANA) has reserved the following three blocks of the IP address space for private internets:
+1. $10.0.0.0 - 10.255.255.255$ (10/8 prefix)
+2. $172.16.0.0 - 172.31.255.255$ (172.16/12 prefix)
+3. $192.168.0.0 - 192.168.255.255$ (192.167/16 prefix)
+We will refer to the first block as "24-bit block", the second as "20-bit block" and to the third as "16-bit block". Note that (in pre-CIDR notation) the first block is nothing but a single class A network number, while the second block is a set of 16 contiguous class B network numbers and third block is a set of 256 contiguous class C network numbers.
+
+An enterpreise that decides to use IP addresses out of the adress space defined in this document can do so without any coordination with IANA or an Internet registry. The address space can thus beused by many enterprises. Adresses within this private address space will only be unique within the enterprise, or the set of enterprises which choose to cooperate over this space so they may communicate with each other in their own private internet.
+]
+
+Nochmals kurz zusammengefasst: die oben erwähnten Bereiche werden *nicht für öffentliche Adressen im Internet vergeben*. Zur öffentlichen Kommunikation wird dem *gesamten Teilnetz* vom Internetprovider eine IP-Adresse aus einem seiner Adressblöcke zugeteilt (siehe NAT weiter oben). Jedes Gerät des Teilnetztes ist nach außen hin dann nur unter dieser Adresse sichtbar (Bei IPv6 ist dies nicht mehr notwendig. Es gibt dort so viele Adressen, dass tatsächlich jedes Gerät (auch auf absehbare Zeit) seine eigene Adresse haben könnte).
+
+*Dynamische Adressierung*: In beiden Fällen (lokal/öffentlich) gibt es sowohl die Möglichkeit, dass man immer die gleiche, also eine feste Adresse hat, als auch die Möglichkeit, dass in gewissen Absständen bzw. bei jedem Beitritt zum Netz eine beliebige verfügbare Adresse zugeteilt wird, also *dynamisch*.
+
+DODO Exkurs DHCP
+
+== Routing
+
+Aufgrund der Struktur des Internets verlaufen Wege nicht "direkt", sondern die Kommunikation kann über verschiedenste Geräte verlaufen. Möchte man die *Route* nachverfolgen, kann unter Windows beispielsweise der _tracert_ Befehl verwendet werden. Im folgenden beispiele wurde
+```
+tracert wgg-neumarkt.de
+```
+ausgeführt:
+
+#image("images/routing.png")
+
+Der erste "Hop" ist dabei die hauseigene Fritzbox, die die Verbindung nach außen regelt. Es folgen einige Hops über Zwischenstationen, bis offenbar der Adressbereich der WGG-Homepage erreicht wird (85.236.32.138). Von dort aus ist es dann nur noch ein Sprung bis zur eigentlichen Website.
+
+DODO: Einfügen Bild von Routing aus dem Schulnetz -> mehrere Hops im lokalen Netzwerk
+
+Im Allgemeinen sind die Strukturen und technischen Details noch wesentlich komplexer. Für uns reicht aber dieser grobe Überblick.
+
+= Transportschicht
+
+An diesem Punkt können wir zwar einen Weg durch unser Netzwerk finden, allerdings müssen wir noch einige Probleme/Fragen lösen:
+
+1. Wie sollen die zu versendenen Daten *aufgeteilt*, d.h *segmentiert* werden?
+2. Wie werden *Staus* vermieden?
+3. Ist der Verlust einzelner *Datenpakete* in Ordnung?
+4. Wie stellen wir sicher, dass die Übertragung *fehlerfrei* abläuft?
+
+Alle diese Fragen werden in der Transportschicht beantwortet. Die beiden wichtigsten Protokolle in diesem Zusammenhang sind *TCP* und *UDP*.
+
+== TCP-Protokoll
+
+Das *Transmission Control Protocol* verlangt eine Verbindung zwischen zwei festgelegten Endpunkten (sogenannte *Sockets*) - in der Regel greift TCP dabei auf das IP-Protokoll der Vermittlungsschicht darunter zurück.
+
+Möchte man via TCP eine Verbindung zu einem bestimmten Dienst - also z.B. auf einem Server irgendwo im Internet - aufbauen, dann sind vier Informationen notwendig:
+1. Die eigene IP-Adresse, also die der Quelle der Anfrage.
+2. Der eigene *Port* (siehe unten).
+3. Die IP-Adresse des Ziel-Rechners.
+4. Der Port, der auf dem Zielrechner angesteuert werden soll.
+
+Ein typischer Verbindungsaufbau sieht dann wie folgt aus:
+
+1. Der Client schickt ein *SYN*-Paket (von engl. synchronize) an den Server.
+2. Der Server antwortet - sofern der entsprechende Port geöffnet ist - mit einem *SYN/ACK*-Paket (von engl. acknowledge).
+3. Der Client bestätigt den Erhalt dieses Pakets, indem er selbst ein *ACK*-Paket zurücksendet.
+
+Damit ist die Verbindung hergestellt.
+
+*Zum Port-Begriff*
+
+Da auf jedem Rechner *viele Prozesse* ablaufen, die gegebenenfalls aber alle Datenpakete aus dem Netzwerk beziehen wollen, muss ein Unterscheidungsmerkmal getroffen werden. Dieses Merkmal wird *Port* genannt und entsprechend dieser *Portnummer* werden einkommende Datenpakte eindeutig zugeordnet werden. Die Portnummer ist eine Folge aus 16 Bits.
+
+*Beispiele für übliche Portnummern*
+- http: hypertext transfer protocol: 80
+- https: hypertext transfer protocol secure: 443
+- FTP: file transfer protocol: 21
+- POP3: post office protocol 3: 110
+- SMTP: Simple mail transfer protocol: 25
+
+== UDP-Protokoll
+
+Das *User Datagram Protocol* verwendet ebenfalls Ports, um Daten dem richtigen Programm auf einem Zielrechner zukommen zu lassen. *UDP* hat einige Eigenschaften, die auf TCP nicht zutreffen:
+
+1. Es ist *verbindungslos* - ein etwas missverständlicher Begriff der aussagt, dass Kommunikation in der "Gegenrichtung" nicht möglich ist (Rundfunk wäre also verbindungslos z.B.).
+2. Es ist *nicht-zuverlässig*, d.h es ist nicht sichergestellt, dass die ankommenden Daten vollständig und fehlerfrei sind.
+3. Es ist *ungesichert* und *ungeschützt*, d.h. es gibt keine eingebauten Sicherheitsmechanismen, die eine Verfälschung verhindern.
+
+Diesen Nachteilen stehen einige dadruch entstehende Vorteile gegenüber:
+1. TCP hat die obigen Eigenschaften, dadurch wird die Datenlast aber größer, da z.B. Sicherheitsmechanismen durch zusätzliche Daten wie checksums realisiert werden.
+2. Die Übertragungsgeschwindigkeit ist deutlich höher.
+
+#hinweis[UDP und TCP arbeiten voneinander unabhängig, d.h. Ports können von beiden verwendet werden - man kann also eine TCP und eine UDP Anwendung z.B. auf Port 80 lauschen lassen.]
+
+
+= Anwendungsschicht
+
+
+
+= Organisationen
+
+
+Es gibt mehrere Organisationen, die mit der *"Verwaltung"* des Internets beschätigt sind:
+1. #text(red)[*ICANN*]: Internet Corporation for Assigned Names and Numbers \ Diese Organisation koordiniert die Vergabe von einmaligen Namen und Adressen im Internet. Dazu gehören insbesondere die Koordination des Domain Name Systems und die "IANA-Funktion" (Internet Assigned Names and Numbers).
+2. #text(red)[*Réseaux IP Européens Network Coordination Centre*] \ Eine ähnliche Organisation, die aber speziell für Europa, den Nahen osten und Teile von Zentralasien zuständing ist.
+3. #text(red)[*IETF*]: Internet Engineering Task Force \ Hier wird im Wesentlichen die technische Weiterentwicklung des Internets vorangetrieben.
+4. #text(red)[*IEEE*]: Ein Berufsverband von Ingenieuren und Technikern, die sich mit der Standardisierung der Netzwerktechnik beschäftigen.
+
+In diesem Sinne keine Organisation, aber #text(red)[*RFC*] Request for Comments  sind dennoch unerlässlich: \ In diesem Skript bereits mehrfach erwähnt wurden RFC Memos, die gewisse Standards vorgeben. Diese Standards müssen implementiert bzw. berücksichtigt werden, wenn neue Technologie in den Verbund des Internets aufgenommen werden wollen.
 
 #pagebreak()
 == Lösungen
@@ -323,3 +498,11 @@ Die Klammerschreibweise zeigt jeweils an, zu welcher Basis die Ziffern interpret
 - $(1010#hm 1100#hm 0001#hm 1001)_2 = (\a\c#hm 19)_16$
 - $(0e#hm \c1#hm 10)_16 = (1110#hm 1100#hm 0001#hm 0001#hm 0000)$
 #link(<AufgabeHexa>)[Zurück zur Aufgabe]
+
+<LösungIP>
+
+$88.215.213.26$ entspricht $0101#hm 1000 . 1101#hm 01111 . 1101 #hm 0101 . 0001#hm 1010$
+
+$0101#hm 1000$ entspricht $88$, $0110#hm 0011$ entspricht 99, $0011#hm 1111$ entspricht 63 und $1001#hm 0011$ entspricht 147, also gesamt: $88.99.63.147$
+
+#link(<AufgabeIP>)[Zurück zur Aufgabe]
