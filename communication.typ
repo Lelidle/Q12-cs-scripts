@@ -392,8 +392,6 @@ Nochmals kurz zusammengefasst: die oben erwähnten Bereiche werden *nicht für �
 
 *Dynamische Adressierung*: In beiden Fällen (lokal/öffentlich) gibt es sowohl die Möglichkeit, dass man immer die gleiche, also eine feste Adresse hat, als auch die Möglichkeit, dass in gewissen Absständen bzw. bei jedem Beitritt zum Netz eine beliebige verfügbare Adresse zugeteilt wird, also *dynamisch*.
 
-DODO Exkurs DHCP
-
 == Routing
 
 Aufgrund der Struktur des Internets verlaufen Wege nicht "direkt", sondern die Kommunikation kann über verschiedenste Geräte verlaufen. Möchte man die *Route* nachverfolgen, kann unter Windows beispielsweise der _tracert_ Befehl verwendet werden. Im folgenden beispiele wurde
@@ -467,10 +465,44 @@ Diesen Nachteilen stehen einige dadruch entstehende Vorteile gegenüber:
 
 = Anwendungsschicht
 
+Nachdem nun alle unterliegenden Schritte abgeschlossen sind und eine Verbindung hergestellt wurde, können die Anwendungen die entsprechenden Daten verarbeiten.
 
+== HTTP-Protokoll
+
+Das *Hypertext Transfer Protocol*  ist das wohl bekannteste Internetprotokoll, das verwendet wird, um Hypertext-Dokumente (also HTML-Code) aus dem WWW zu laden und (in der Regel) durch einen Browser darstellen zu lassen.
+
+Ein typischer Ablauf sieht dabei wie folgt aus:
+
+1. Der Nutzer tippt in einen Browser eine *URL* ein (s.u.).
+2. Die URL wird mittels des *DNS*-Protokoll (s.u.) in eine IP-Adresse umgesetzt.
+3. Zur Verbindung wird das TCP-Protokoll auf Port 80 genutzt und eine HTTP-GET-Anfrage gesendet.
+4. Ist die Anfrage in Ordnung, dann folgt eine Antwort mit dem Code "*200*" (OK) und den angeforderten Daten. War mit der Anfrage etwas nicht in Ordnung, so wird in der Regel eine Fehlermeldung zurückgesendet (z.B. das berühmte *404* - nicht gefunden.)
+
+== DNS-Protokoll
+
+Um die Übersetzung von URLS in IP-Adressen möglich zu machen gibt es das *DNS*-Protokoll (Domain Name System). Hierbei handelt es sich um ein globales Netzwerk an Servern, die die "Adressen", die für das Internet relevant sind speichern und auf Anfrage versenden (z.B. unterhält Google einen DNDS-Server, der unter der IP-Adresse 8.8.8.8 erreichbar ist. Ein weiterer beliebter DNS-Server ist 1.1.1.1 von Cloudflare.)
+
+Tippt man nun eine URL in die Adresszeile ein, so laufen folgende Schritte ab:
+
+1. Der Browser prüft, ob die Adresse bereits im lokalen *Cache* hinerlegt ist.
+2. Falls nein, wird eine Anfrage an den vom Internetanbieter (ISP) bereitgestellten *Router* geschickt - auch dieser hat einen Cache.
+3. Falls auch dieser nicht weiterweis, wird eine Anfrage an den vom ISP verwendeten *DNS-Server* gestellt.
+4. Die meisten (üblichen) Seiten sind dort hinterlegt. Falls aber immer noch keine IP-Adresse gefunden werden kann, wird weiter eskaliert - Interessierte können an dieser Stelle weiterrecherchieren!
+5. Die Adresse wird zurückgesendet und kann jetzt für einen Verbindungsaufbau verwendet werden.
+
+== URL
+
+Der *Uniform Ressource Locator* ist eine alternative Bezeichnung für bestimmte Internetadressen, damit keine IP-Adressen in den Browser eingegeben werden müssen. Eine URL besteht dabei immer aus einem Schema und einem daraus folgenden schema-spezifischen Anteil.
+
+*Beispiel*:
+
+#align(center)[#text(red)[https]: #text(blue)[\/\/www.wgg-neumarkt.de]]
+
+Das Schema ist dabei das HTTPS-Protokoll, also die (sichere) Anfrage nach einer Website. In Blau stehen dabei der Alias des Namens des Servers, der erreicht werden soll, sowie die Domain.
+
+Auch hier könnte man deutlich tiefer in Details eintauchen, aus Zeitgründen muss dies allerdings entfallen.
 
 = Organisationen
-
 
 Es gibt mehrere Organisationen, die mit der *"Verwaltung"* des Internets beschätigt sind:
 1. #text(red)[*ICANN*]: Internet Corporation for Assigned Names and Numbers \ Diese Organisation koordiniert die Vergabe von einmaligen Namen und Adressen im Internet. Dazu gehören insbesondere die Koordination des Domain Name Systems und die "IANA-Funktion" (Internet Assigned Names and Numbers).
