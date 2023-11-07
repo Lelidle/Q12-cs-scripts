@@ -21,7 +21,7 @@
 
 #set page(
     header: align(right)[
-        Kommunikation und Synchronisation Skript 2inf1 \
+        Netzwerkkommunikation Skript 2inf1 \
   ],
   numbering: "1"
 )
@@ -139,7 +139,7 @@ Es gibt immens viele Protokolle in der technischen Welt, neben den oben bereits 
 
 = Das OSI-Modell
 
-Schlägt man ein beliebiges Buch oder einen Text zur Netwerkprogrammierung auf, so ist die Wahrscheinlichkeit auf das OSI-(open Systems Interconnection) Modell zu stoßen sehr groß. Wir werden es zunächst in seiner vollen Pracht bewundern, dann auf das für die Schule notwendige herunterbrechen und zuletzt einen Schnelldurchlauf durch die verschiedenen Schichten des Modells absolvieren.
+Schlägt man ein beliebiges Buch oder einen Text zur Netwerkprogrammierung auf, so ist die Wahrscheinlichkeit auf das OSI-(open Systems Interconnection) Modell zu stoßen sehr groß.
 
 #let cell = rect.with(
   inset: 8pt,
@@ -151,7 +151,7 @@ Schlägt man ein beliebiges Buch oder einen Text zur Netwerkprogrammierung auf, 
 #grid(columns:(30%, 70%), rows:(auto,)*7, gutter: 6pt,
 cell(fill: rgb(255, 102, 0))[*Anwendungsschicht*], cell(fill: rgb(255, 102, 0))[Alle anwendungsspezifischen Protokolle],
 cell(fill: rgb(255, 102, 0))[*Darstellungsschicht*], cell(fill: rgb(255, 102, 0))[Syntax und Semantik der Daten wird geprüft, ggf. Codierung und Datenkompression],
-cell(fill: rgb(255, 102, 0))[*Sitzugsschicht*], cell(fill: rgb(255, 102, 0))[Zuständig für Synchronisation, wenn die Benutzer eine gemeinsame Sitzung aufbauen, nur verbindungsorientiert.],
+cell(fill: rgb(255, 102, 0))[*Sitzungsschicht*], cell(fill: rgb(255, 102, 0))[Zuständig für Synchronisation, wenn die Benutzer eine gemeinsame Sitzung aufbauen, nur verbindungsorientiert.],
 cell(fill: rgb(0, 128, 255))[*Transportschicht*], cell(fill:rgb(0, 128, 255))[Zuständig für die Port-Adressierung, hier kommunizieren zwei Prozesse. Unterteilt den Bitstrom der Sitzung in größere Pakete, Kanal oder Broadcast.],
 cell(fill: rgb(251, 255, 0))[*Vermittlungsschicht*], cell(fill: rgb(251, 255, 0))[Zuständig für die IP-Adressierung, Routenwahl, Steuerung bei Staus, Verknüpfung von Teilnetzen.],
 cell(fill: rgb(240, 0, 0))[*Sicherungsschicht*], cell(fill:rgb(240, 0, 0))[Zuständig für die Zugriffskontrolle zum Medium, das Verpacken der Daten in Einheiten.],
@@ -224,6 +224,13 @@ Merkt man sich die obigen Fakten ohne weitere Details, so kommt man bei Abiturau
 #image("images/abi2022.png")
 ]
 
+Auch im Abitur 2021 lässt sich eine ähnliche Aufgabe finden:
+
+#align(center)[
+#image("images/abi2021.png")
+]
+
+
 #pagebreak()
 
 = Übertragungsschicht
@@ -247,7 +254,7 @@ In der "realen Welt" ist diese Topologie die vorherrschende. Der Name ist im Wes
 #align(center)[
 #image("images/stern_topologie.png", width:50%)
 ]
-Analyse:
+*Analyse*:
 1. Der Ausfall des Zentralrechners ist problematisch, der Ausfall aller anderen Rechner dagegen nicht relevant.
 2. Sowohl die Fehlersuche als auch die Erweiterung sind problemlos möglich.
 3. Der Zentralrechner muss hochwertig sein.
@@ -268,7 +275,7 @@ Hier sind alle Geräte mit einer zentral verlaufenden Leitung (Bus) verbunden, e
 1. Der Ausfall des Bus ist problematisch, der Ausfall von Rechnern dagegen nicht.
 2. Sowohl die Fehlersuche als auch die Erweiterung sind problemlos möglich.
 3. Der Bus muss eine hohe Bandbreite besitzen, ansonsten gibt es keine teuren Komponenten.
-4. Die Übertragungsrate hängt (quasi) alleine vom Bus ab. Bei hoher Last lassen sich Kollissionen nicht direkt vermeiden. Es kann der Ansatz eines sogenannten *Token Bus* verwendet werden - dann kann nur derjenige, der gerade den Token hat Informationen senden.
+4. Die Übertragungsrate hängt (quasi) alleine vom Bus ab. Bei hoher Last lassen sich Kollissionen nicht direkt vermeiden. Es kann der Ansatz eines sogenannten *Token Bus* verwendet werden - dann kann nur derjenige Rechner, der gerade den Token hat Informationen senden.
 
 *Ring-Topologie*
 
@@ -307,23 +314,40 @@ Natürlich sind auch Kombinationen verschiedener Arten von Rechnernetzen möglic
 
 == Ethernet-Protokoll
 
-Auf diesem Level spielt bereits das *Ethernet*-Protokoll eine Rolle, dass auch den meisten nicht-technisch versierten Personen ein Begriff ist. Es ist ein Standard für die Kommunikation in kabelgebundenen Netzwerken (LAN).
+Das *Ethernet*-Protokoll operiert eigentlich auf der zweiten Schicht (Sicherungsschicht) des OSI-Modells. Es ist auch den meisten nicht-technisch versierten Personen ein Begriff und bezeichnet einen Standard für die Kommunikation in kabelgebundenen Netzwerken (LAN).
 
-Bei diesem Verweis soll es an dieser Stelle bleiben, für die Interessierten findet sich als Ausgangspunkt für weitere Recherchen ein Ethernet II frame (d.h. der Aufbau eines Ethernet-Protokoll-Datenpakets):
+Es verbleibt die Frage, welchen Zweck dieses Protokoll erfüllt. Mit Hilfe des Ethernet-Protokolls können Netzwerkadapter mit ihrer "Umgebung" erst kommunizieren - eine physische Verbindung ist noch nicht ausreichend. Damit sind die Geräte gemeint, die direkt mit diesem (via Kabel) verbunden sind.
+
+Ein Gerät (genauer gesagt seine Netzwerkkarte) hat eine eindeutige *MAC-Adresse* (Media-Access-Control-Address, auch *physische Adresse*) - also die Nummer, die diesem als Identifikator dient.
+
+Ein Ethernet-Paket enthält also zunächst die zugehörige MAC-Adresse des Geräts, zu dem das Paket kommen soll - außerdem die MAC-Adresse des Ursprungsgeräts, sowie einen *EtherType*, das anzeigt, welches Protokoll im Paket enthalten ist. Beispielsweise steht $0\x0800$ der EtherType für das IPv4 Protokoll, $0\x0842$ für das Wake-on-LAN Protokoll, etc. Diese Informationen werden auch als MAC Header bezeichnet.
 
 #align(center)[#image("/images/ethernet_frame.png")]
 
+Danach folgen die eigentlichen Daten, die transportiert werden sollen. Abschließend findet sich noch eine CheckSum, die die Integrität der Daten sicherstellt (sie wird mit dem Cyclic Redundancy Check, kurz CRC berechnet).
+#hinweis[Das Ethernet-Protokoll stellt nicht sicher, dass das Paket ankommt, sollte es von einem Geräte unterwegs "fallen gelassen" werden, so erfolgt nicht automatisch ein erneutes Senden.]
+
+Das Ethernet-Protokoll kümmert sich auch nicht weiter um die darauf aufbaueneden Protokolle, d.h. die transportierten Daten sind in keiner Weise in dieses Protokoll mit eingebaut, d.h. die Sicherungsschicht arbeitet autark von den Übrigen.
+
 = Vermittlungsschicht
 
-Es ist natürlich nicht ausreichend, dass physikalische Leitungen vorhanden sind. Datenpakete müssen auch den Weg durch das Netzwerk finden, um zum entsprechenden Ziel zu kommen, hier kommen Begriffe wie die *IP-Adresse*, *Routing* und entsprechende Geräte wie der *Router* ins Spiel.
+Im Gegensatz zu früheren direkten Kommunikationsformen ist es - wie bereits erwähnt - nicht mehr ausreichend, dass physikalische Leitungen vorhanden sind.
+
+In früheren Telefonnetzen wurden die Apparate direkt miteinander verbunden ("Ich verbinde.."), um die Kommunikation herzustellen.
+
+Datenpakete müssen heute ihren Weg durch das Netzwerk finden, um zum entsprechenden Ziel zu kommen. Die Wege kurz aufeiander folgender Datenpakete können dabei grundlegend verschieden sein. Hier kommen Begriffe wie die *IP-Adresse*, *Routing* und entsprechende Geräte wie der *Router* ins Spiel.
+
+#merke[Das verschiedene Pakete, die eigentlich zur selben "Sendung" gehören unterschiedliche Routen nehmen bedeutet natürlich auch, dass sie möglicherweise nicht in derselben Reihenfolge ankommen in der sie abgeschickt wurden. Dieses Problem löst das TCP-Protokoll, dazu später mehr.]
 
 == IP-Adressen
 
-*IP(v4)* ist die erste Version des Internet Protocols, das weltweit verbreitet und eingesetzt wurde. Eine solche IP-Adresse besteht aus einer 32-stelligen Binärzahl, die jeweils einem Netzwerkadapters im Internet zugeordnet ist und so eine Identifizierung möglich macht, da sie im betreffenden Netwerk eindeutig ist. Netwerken von z.B. Providern wird dann ein ganzer Block an Adressen zugeordnet (siehe unten).
+*IP(v4)* ist die erste Version des Internet Protocols, das weltweit verbreitet und eingesetzt wurde. Eine solche IP-Adresse besteht aus einer 32-stelligen Binärzahl, die jeweils einem Netzwerkadapter im Internet zugeordnet ist und so eine Identifizierung möglich macht, da sie im betreffenden Netwerk eindeutig ist. Netwerken von z.B. Providern wird dann ein ganzer Block an Adressen zugeordnet (siehe unten).
 
-#hinweis[*Für die Experten*: streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass Ip-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner sogenannten *MAC-Adresse* (Media-Access-Contro-Address, auch *physische Adresse*) - also die Nummer, die diesem Netzwerkadapter als Identifikator dient.]
+Für die Weiterleitung von Datenpaketen ist die IP-Adresse geeigneter als die MAC-Adresse, da wir Subnetze zusammenfassen können. Würden nur MAC-Adressen zur Weiterleitung benutzt, so müssten immer alle MAC-Adressen, die erreichbar sind, überall auf dem Weg gespeichert werden. Dies ist mit IP nicht der Fall, da in der Routingtabelle (über die ein Netzwerkgerät i.d.R. verfügt) einfach der größte übereinstimmende IP-Adressbereich gesucht wird und das Paket dorthin weitergeleitet wird. Dadurch kommen wir dem Ziel sicher "näher".
 
-Zur besseren Lesbarkeit wird die Adresse üblicherweise in vier 8-stellige Blöcke aufgeteilt und (für den Menschen) dann in Dezimalschreibweise abgebildet werden - jeweils durch einen Punkt getrennt.
+#hinweis[*Für die Experten*: streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass IP-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner]
+
+Zur besseren Lesbarkeit wird die Adresse üblicherweise in vier 8-stellige Blöcke aufgeteilt (also in 4 Byte Blöcke) und (für den Menschen) dann in Dezimalschreibweise abgebildet - jeweils durch einen Punkt getrennt.
 
 *Beispiel*
 
@@ -394,7 +418,7 @@ Nochmals kurz zusammengefasst: die oben erwähnten Bereiche werden *nicht für �
 
 == Routing
 
-Aufgrund der Struktur des Internets verlaufen Wege nicht "direkt", sondern die Kommunikation kann über verschiedenste Geräte verlaufen. Möchte man die *Route* nachverfolgen, kann unter Windows beispielsweise der _tracert_ Befehl verwendet werden. Im folgenden beispiele wurde
+Aufgrund der Struktur des Internets verlaufen Wege nicht "direkt", sondern die Kommunikation kann über verschiedenste Geräte verlaufen. Möchte man die *Route* nachverfolgen, kann unter Windows beispielsweise der _tracert_ Befehl verwendet werden. Im folgenden Beispiel wurde
 ```
 tracert wgg-neumarkt.de
 ```
@@ -404,9 +428,9 @@ ausgeführt:
 
 Der erste "Hop" ist dabei die hauseigene Fritzbox, die die Verbindung nach außen regelt. Es folgen einige Hops über Zwischenstationen, bis offenbar der Adressbereich der WGG-Homepage erreicht wird (85.236.32.138). Von dort aus ist es dann nur noch ein Sprung bis zur eigentlichen Website.
 
-DODO: Einfügen Bild von Routing aus dem Schulnetz -> mehrere Hops im lokalen Netzwerk
-
 Im Allgemeinen sind die Strukturen und technischen Details noch wesentlich komplexer. Für uns reicht aber dieser grobe Überblick.
+
+#hinweis[Für Interessierte: der _tracert_ Befehl verwendet das Internet Control Message Protocol ICMP, das zur Fehlersuche und Steuerung in der IP-Welt verwendet wird, da es Metadaten sendet.]
 
 = Transportschicht
 
@@ -419,23 +443,26 @@ An diesem Punkt können wir zwar einen Weg durch unser Netzwerk finden, allerdin
 
 Alle diese Fragen werden in der Transportschicht beantwortet. Die beiden wichtigsten Protokolle in diesem Zusammenhang sind *TCP* und *UDP*.
 
-== TCP-Protokoll
 
-Das *Transmission Control Protocol* verlangt eine Verbindung zwischen zwei festgelegten Endpunkten (sogenannte *Sockets*) - in der Regel greift TCP dabei auf das IP-Protokoll der Vermittlungsschicht darunter zurück.
+== UDP-Protokoll
 
-Möchte man via TCP eine Verbindung zu einem bestimmten Dienst - also z.B. auf einem Server irgendwo im Internet - aufbauen, dann sind vier Informationen notwendig:
-1. Die eigene IP-Adresse, also die der Quelle der Anfrage.
-2. Der eigene *Port* (siehe unten).
-3. Die IP-Adresse des Ziel-Rechners.
-4. Der Port, der auf dem Zielrechner angesteuert werden soll.
+Das *User Datagram Protocol* ist vergleichsweise einfach gestrickt, es sendet lediglich die Daten und kümmert sich um nicht viel mehr. *UDP* hat insbesondere einige Eigenschaften, die auf TCP nicht zutreffen:
 
-Ein typischer Verbindungsaufbau sieht dann wie folgt aus:
+1. Es ist *verbindungslos* - ein etwas missverständlicher Begriff der aussagt, dass Kommunikation in der "Gegenrichtung" nicht möglich ist (Rundfunk wäre also verbindungslos z.B.).
+2. Es ist *nicht-zuverlässig*, d.h es ist nicht sichergestellt, dass die ankommenden Daten vollständig und fehlerfrei sind.
+3. Es ist *ungesichert* und *ungeschützt*, d.h. es gibt keine eingebauten Sicherheitsmechanismen, die eine Verfälschung verhindern. (Bei TCP auch nur in Verbindung mit z.B. TLS gegeben, siehe unten).
 
-1. Der Client schickt ein *SYN*-Paket (von engl. synchronize) an den Server.
-2. Der Server antwortet - sofern der entsprechende Port geöffnet ist - mit einem *SYN/ACK*-Paket (von engl. acknowledge).
-3. Der Client bestätigt den Erhalt dieses Pakets, indem er selbst ein *ACK*-Paket zurücksendet.
+Diesen Nachteilen stehen einige dadruch entstehende Vorteile gegenüber:
+1. TCP hat die obigen Eigenschaften, dadurch wird die Datenlast aber größer, da z.B. Sicherheitsmechanismen durch zusätzliche Daten wie checksums realisiert werden.
+2. Die Übertragungsgeschwindigkeit ist deutlich höher.
 
-Damit ist die Verbindung hergestellt.
+Der Heder eines UDP-Ports sieht wie folgt aus:
+
+
+#align(center)[
+#image("images/udpheader.png", width:50%)
+Quelle: #link("https://www.geeksforgeeks.org/examples-on-udp-header/")[geeksforgeeks]
+]
 
 *Zum Port-Begriff*
 
@@ -448,19 +475,39 @@ Da auf jedem Rechner *viele Prozesse* ablaufen, die gegebenenfalls aber alle Dat
 - POP3: post office protocol 3: 110
 - SMTP: Simple mail transfer protocol: 25
 
-== UDP-Protokoll
-
-Das *User Datagram Protocol* verwendet ebenfalls Ports, um Daten dem richtigen Programm auf einem Zielrechner zukommen zu lassen. *UDP* hat einige Eigenschaften, die auf TCP nicht zutreffen:
-
-1. Es ist *verbindungslos* - ein etwas missverständlicher Begriff der aussagt, dass Kommunikation in der "Gegenrichtung" nicht möglich ist (Rundfunk wäre also verbindungslos z.B.).
-2. Es ist *nicht-zuverlässig*, d.h es ist nicht sichergestellt, dass die ankommenden Daten vollständig und fehlerfrei sind.
-3. Es ist *ungesichert* und *ungeschützt*, d.h. es gibt keine eingebauten Sicherheitsmechanismen, die eine Verfälschung verhindern.
-
-Diesen Nachteilen stehen einige dadruch entstehende Vorteile gegenüber:
-1. TCP hat die obigen Eigenschaften, dadurch wird die Datenlast aber größer, da z.B. Sicherheitsmechanismen durch zusätzliche Daten wie checksums realisiert werden.
-2. Die Übertragungsgeschwindigkeit ist deutlich höher.
 
 #hinweis[UDP und TCP arbeiten voneinander unabhängig, d.h. Ports können von beiden verwendet werden - man kann also eine TCP und eine UDP Anwendung z.B. auf Port 80 lauschen lassen.]
+
+Die Nachteile von UDP scheinen auf den ersten Blick stark zu überwiegen, dennoch nutzen einige Bereiche dieses Protokoll, wenn die Latenz gering sein soll und der Verlust einzelner Pakete nicht so schwer wiegt, Beispiele sind:
+
+1. *Voice over IP*: Anwendungen, die Sprach- oder Videoanrufe aufbauen.
+2. *Videostreaming*
+3. *Online-Gaming*
+
+== TCP-Protokoll
+
+Das *Transmission Control Protocol* verlangt eine Verbindung zwischen zwei festgelegten Endpunkten (sogenannte *Sockets*) - in der Regel greift TCP dabei auf das IP-Protokoll der Vermittlungsschicht darunter zurück.
+
+Möchte man via TCP eine Verbindung zu einem bestimmten Dienst - also z.B. auf einem Server irgendwo im Internet - aufbauen, dann sind vier Informationen notwendig:
+1. Die eigene IP-Adresse, also die der Quelle der Anfrage.
+2. Der eigene *Port* (siehe unten).
+3. Die IP-Adresse des Ziel-Rechners.
+4. Der Port, der auf dem Zielrechner angesteuert werden soll.
+
+Ein typischer Verbindungsaufbau (*Three-Way-Handshake*) sieht dann wie folgt aus:
+
+1. Der Client schickt ein *SYN*-Paket (von engl. synchronize) an den Server.
+2. Der Server antwortet - sofern der entsprechende Port geöffnet ist - mit einem *SYN/ACK*-Paket (von engl. acknowledge).
+3. Der Client bestätigt den Erhalt dieses Pakets, indem er selbst ein *ACK*-Paket zurücksendet.
+
+Damit ist die Verbindung hergestellt. Ein etwas genaueres Bild der ablaufenden Prozesse bietet das Zustandsdiagramms eines zugehörigen Automaten (aus #link("https://www.ietf.org/rfc/rfc9293.html")[RFC9293]).
+Und auch hier gilt noch ein Hinweis, der direkt über dem Diagramm steht:
+
+"NOTA BENE: This diagram is only a summary and must not be taken as the total specification. Many details are not included."
+
+#align(center)[
+#image("images/tcpstate.png", width:75%)
+]
 
 
 = Anwendungsschicht
@@ -469,7 +516,7 @@ Nachdem nun alle unterliegenden Schritte abgeschlossen sind und eine Verbindung 
 
 == HTTP-Protokoll
 
-Das *Hypertext Transfer Protocol*  ist das wohl bekannteste Internetprotokoll, das verwendet wird, um Hypertext-Dokumente (also HTML-Code) aus dem WWW zu laden und (in der Regel) durch einen Browser darstellen zu lassen.
+Das *Hypertext Transfer Protocol*  ist das wohl bekannteste Protokoll, das verwendet wird, um Hypertext-Dokumente (also HTML-Code, üblicherweise) aus dem WWW zu laden und (in der Regel) durch einen Browser darstellen zu lassen.
 
 Ein typischer Ablauf sieht dabei wie folgt aus:
 
@@ -500,7 +547,7 @@ Der *Uniform Ressource Locator* ist eine alternative Bezeichnung für bestimmte 
 
 Das Schema ist dabei das HTTPS-Protokoll, also die (sichere) Anfrage nach einer Website. In Blau stehen dabei der Alias des Namens des Servers, der erreicht werden soll, sowie die Domain.
 
-Auch hier könnte man deutlich tiefer in Details eintauchen, aus Zeitgründen muss dies allerdings entfallen.
+Auch hier könnte man deutlich tiefer in Details eintauchen, die aus Zeitgründen - und geringer Relevanz für das Abitur - aber entfallen.
 
 = Organisationen
 
