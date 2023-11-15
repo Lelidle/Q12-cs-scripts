@@ -1,5 +1,6 @@
 #import "template.typ": *
 #import "@preview/tablex:0.0.6": tablex, cellx, rowspanx, colspanx
+#import "@preview/bytefield:0.0.2": *
 #show: setup
 #set enum(numbering: (..args) => strong(numbering("1.", ..args))) // in Aufzählungen Zahlen fett
 #set heading (
@@ -343,9 +344,11 @@ Datenpakete müssen heute ihren Weg durch das Netzwerk finden, um zum entspreche
 
 *IP(v4)* ist die erste Version des Internet Protocols, das weltweit verbreitet und eingesetzt wurde. Eine solche IP-Adresse besteht aus einer 32-stelligen Binärzahl, die jeweils einem Netzwerkadapter im Internet zugeordnet ist und so eine Identifizierung möglich macht, da sie im betreffenden Netwerk eindeutig ist. Netwerken von z.B. Providern wird dann ein ganzer Block an Adressen zugeordnet (siehe unten).
 
-Für die Weiterleitung von Datenpaketen ist die IP-Adresse geeigneter als die MAC-Adresse, da wir Subnetze zusammenfassen können. Würden nur MAC-Adressen zur Weiterleitung benutzt, so müssten immer alle MAC-Adressen, die erreichbar sind, überall auf dem Weg gespeichert werden. Dies ist mit IP nicht der Fall, da in der Routingtabelle (über die ein Netzwerkgerät i.d.R. verfügt) einfach der größte übereinstimmende IP-Adressbereich gesucht wird und das Paket dorthin weitergeleitet wird. Dadurch kommen wir dem Ziel sicher "näher".
+Für die Weiterleitung von Datenpaketen ist die IP-Adresse geeigneter als die MAC-Adresse, da wir Subnetze zusammenfassen können. Würden nur MAC-Adressen zur Weiterleitung benutzt, so müssten immer alle MAC-Adressen, die erreichbar sind, überall auf dem Weg gespeichert werden. Dies ist mit IP nicht der Fall, da in der Routingtabelle (über die ein Netzwerkgerät i.d.R. verfügt) am Besten passende IP-Adressbereich gesucht wird und das Paket dorthin weitergeleitet wird.
 
-#hinweis[*Für die Experten*: streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass IP-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner]
+#hinweis[*Für die Experten*:
+1. streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass IP-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner MARC-Adresse.
+2. Es gibt zwei weitere Protokolle, die im Detail "vernünftige" Wege durch das Netz finden, nämlich *OSPF* (dieses verwendet auch den Dijkstra Algorithmus! siehe 11.) und *BGP*]
 
 Zur besseren Lesbarkeit wird die Adresse üblicherweise in vier 8-stellige Blöcke aufgeteilt (also in 4 Byte Blöcke) und (für den Menschen) dann in Dezimalschreibweise abgebildet - jeweils durch einen Punkt getrennt.
 
@@ -527,7 +530,7 @@ Ein typischer Ablauf sieht dabei wie folgt aus:
 
 == DNS-Protokoll
 
-Um die Übersetzung von URLS in IP-Adressen möglich zu machen gibt es das *DNS*-Protokoll (Domain Name System). Hierbei handelt es sich um ein globales Netzwerk an Servern, die die "Adressen", die für das Internet relevant sind speichern und auf Anfrage versenden (z.B. unterhält Google einen DNDS-Server, der unter der IP-Adresse 8.8.8.8 erreichbar ist. Ein weiterer beliebter DNS-Server ist 1.1.1.1 von Cloudflare.)
+Um die Übersetzung von URLS in IP-Adressen möglich zu machen gibt es das *DNS*-Protokoll (Domain Name System). Hierbei handelt es sich um ein globales Netzwerk an Servern, die die "Adressen", die für das Internet relevant sind speichern und auf Anfrage versenden (z.B. unterhält Google einen DNDS-Server, der unter der IP-Adresse 8.8.8.8 erreichbar ist. Ein weiterer beliebter DNS-Server ist 1.1.1.1 von Cloudflare. Legt man mehr Wert auf Privatsphäre, so empfiehlt sich beispielsweise der DNS Server 9.9.9.9)
 
 Tippt man nun eine URL in die Adresszeile ein, so laufen folgende Schritte ab:
 
@@ -560,7 +563,7 @@ Es gibt mehrere Organisationen, die mit der *"Verwaltung"* des Internets beschä
 In diesem Sinne keine Organisation, aber #text(red)[*RFC*] Request for Comments  sind dennoch unerlässlich: \ In diesem Skript bereits mehrfach erwähnt wurden RFC Memos, die gewisse Standards vorgeben. Diese Standards müssen implementiert bzw. berücksichtigt werden, wenn neue Technologie in den Verbund des Internets aufgenommen werden wollen.
 
 #pagebreak()
-== Lösungen
+= Lösungen
 Die Klammerschreibweise zeigt jeweils an, zu welcher Basis die Ziffern interpretiert werden sollen.
 - $(253)_10 = (1111#hm 1101)_2$
 - $(11100#hm 0111)_2 = (231)_10$
