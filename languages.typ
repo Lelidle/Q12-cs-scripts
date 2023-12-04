@@ -68,16 +68,16 @@ Kurz: $L subset.eq Sigma^*$]
 
 Der Ausdruck *$Sigma^*$* ist eine Kurzschreibweise für alle möglichen Wörter, die aus einem Alphabet gebildet werden können. Besteht das Alphabet z.B. nur aus einem einzigen Buchstaben $Sigma = {a}$, so könnten die folgenden Wörter damit gebildet werden: 
 
-$ Sigma^* = {epsilon, a, a\a, a\a\a, #dots} $
+$ Sigma^* = {epsilon, a, a\a, a\a\a, dots.down} $
 
 Dabei steht *$epsilon$* für das "leere Wort" (kein Leerzeichen, sondern einfach "kein Wort", so wie in Java "" einem leeren String entspricht - es ist offiziell zwar eine Zeichenkette, enthält aber kein Zeichen!). in $Sigma^*$ stecken also *alle* möglichen Wörter. Unsere formale Sprache muss aber nicht alle enthalten. Wir könnten z.B. die Sprache definieren, die nur eine geradzahlige Anzahl an $a$'s enthält, also:
-$ L = {epsilon, a\a, a\a\a\a, #dots} $
+$ L = {epsilon, a\a, a\a\a\a, dots.down} $
 
 Und offensichtlich gilt $L subset.eq Sigma^*$
 
 *Weitere Beispiele*: 
 
-1. *Natürliche Sprachen*: Am Beispiel Deutsch. Unser Alphabet besteht aus den folgenden Zeichen: $ Sigma = {"a"; #dots; "z"; "A"; #dots; "Z"; "ä";"Ä";"ö";"Ö";"ü";"Ü";"ß";"!";"\";\"";",";".";":";"Leerzeichen"} $ $Sigma^*$ ist dann die Menge aller möglichen Zeichenketten, allerdings gehören nicht alle zu unserer Sprache! #grid(columns:(50%, 50%), 
+1. *Natürliche Sprachen*: Am Beispiel Deutsch. Unser Alphabet besteht aus den folgenden Zeichen: $ Sigma = {"a"; dots.down; "z"; "A"; dots.down; "Z"; "ä";"Ä";"ö";"Ö";"ü";"Ü";"ß";"!";"\";\"";",";".";":";"Leerzeichen"} $ $Sigma^*$ ist dann die Menge aller möglichen Zeichenketten, allerdings gehören nicht alle zu unserer Sprache! #grid(columns:(50%, 50%), 
 rows:(auto), 
 gutter: 5pt, 
 [#align(center)[#text(green)[*Gehören zur Sprache*]
@@ -120,7 +120,7 @@ Die Lösung sind *(endlich) viele Produktionsregeln*, die die Bildung dieser mö
 
 *Das zu einfache Beispiel*:
 
-Wir wollen die Sprache aller einstelligen Zahlen, sprich die Sprache der Ziffern definieren. Das zugrunde liegende Alphabet ist also $Sigma = {0, 1, #dots, 9}$. Die zugehörige Produktionsregel wird wie folgt notiert: 
+Wir wollen die Sprache aller einstelligen Zahlen, sprich die Sprache der Ziffern definieren. Das zugrunde liegende Alphabet ist also $Sigma = {0, 1, dots.down, 9}$. Die zugehörige Produktionsregel wird wie folgt notiert: 
 
 #let ziffer = [#text(red)[Ziffer]]
 #let ersteZiffer = [#text(blue)[ErsteZiffer]]
@@ -164,7 +164,7 @@ Als nächstes sollen alle dreistelligen Zahlen gebildet werden können. Man kann
 
 Die erste Zeile besteht dieses Mal nur aus Nichtterminalsymbolen und beschreibt die Struktur der Zahlen komplett, die übrigen Zeilen legen dann fest, welche Terminale, sprich welche Ziffern, in den einzelnen Schritten ersetzt werden dürfen. 
 In der dritten Regel greifen wir dabei wieder auf die zweite Regel zurück, um Schreibarbeit zu sparen. 
-#hinweis[Insbesondere in schriftlichen Prüfungen muss eindeutig sein, ob eine Zeichenkette *ein* oder *zwei* Nichtterminale darstellt. Im späteren Verlauf ist es üblich die Nichtterminalsymbole abzukürzen, man würde hier z.B. *E* für die ErsteZiffer nehmen und *Z* für die Ziffer. Der Ausdruck *EZ* und *E Z* kann dann aber durchaus unterschiedliche Bedeutung haben, wenn es noch eine weitere Regel mit *$\E\Z -> #dots$* gibt.
+#hinweis[Insbesondere in schriftlichen Prüfungen muss eindeutig sein, ob eine Zeichenkette *ein* oder *zwei* Nichtterminale darstellt. Im späteren Verlauf ist es üblich die Nichtterminalsymbole abzukürzen, man würde hier z.B. *E* für die ErsteZiffer nehmen und *Z* für die Ziffer. Der Ausdruck *EZ* und *E Z* kann dann aber durchaus unterschiedliche Bedeutung haben, wenn es noch eine weitere Regel mit *$\E\Z -> dots.c$* gibt.
 
 *Quintessenz*: leserlich und eindeutig schreiben, deutliche Leerzeichen einbauen!
 ]
@@ -259,9 +259,9 @@ In aller Regel werden bei Aufgaben zu Grammatiken nur die Produktionsregeln verl
     &(3) "Ende" -> "'12' | '22'" $
     #link(<LösungGrammatik2>)[Zur Lösung]
     3. Geben Sie eine *vollständige* Grammatik für die folgenden Sprachen an: #hinweis[Sie können #link("https://flaci.com")[Flaci] zur Überprüfung nutzen]
-        - Symmetrische a-b-Ketten nach folgendem Muster: #align(center)[aba, aabaa, aaabaaa, aaaabaaaa,#dots]
-        - Geradzahlige Zahlen in Binärdarstellung: $ 0, 10, 100, 110, 1000, 1010, 1100, 1110, #dots $
-        - Natürliche Zahlen mit Tausenderpunkten: $ 1, 50, 375, 1.451, 100.105, 205.111.305 #dots $
+        - Symmetrische a-b-Ketten nach folgendem Muster: #align(center)[aba, aabaa, aaabaaa, aaaabaaaa,dots.down]
+        - Geradzahlige Zahlen in Binärdarstellung: $ 0, 10, 100, 110, 1000, 1010, 1100, 1110, dots.down $
+        - Natürliche Zahlen mit Tausenderpunkten: $ 1, 50, 375, 1.451, 100.105, 205.111.305 dots.down $
     #link(<LösungGrammatik3>)[Zur Lösung]
     ]
 
@@ -348,7 +348,7 @@ Die sich selbst referenzierenden Regeln machen es möglich, dass unendlich viele
 #prodRules(
      content: ( 
         [#text(red)[Wort]],[$"'e'" #buchstabe #buchstabe "'a'"$],
-        [#buchstabe], [$"'a' | 'b' | " #dots " | 'z'"$]	
+        [#buchstabe], [$"'a' | 'b' | " dots.down " | 'z'"$]	
 )
 )
 
@@ -484,8 +484,8 @@ In der folgenden Lösung steht #N für die Nutzerkennung (auch verwendet als bel
 
 $ &(1) #text(red)[Email] -> #N " '@' " #text(red)[U] #text(red)[T]\ 
 &(2) #h(2pt) #N -> #text(red)[B] " | " #Z " | " #N #N \ 
-&(3) #h(2pt) #text(red)[B] -> "'a' | " #dots " | 'z'" \ 
-&(4) #h(2pt) #Z -> "'0' | " #dots " | '9'" \
+&(3) #h(2pt) #text(red)[B] -> "'a' | " dots.c " | 'z'" \ 
+&(4) #h(2pt) #Z -> "'0' | " dots.c " | '9'" \
 &(5) #h(2pt) #text(red)[U] ->  #N #N "'.' | " #text(red)[U] #text(red)[U] \
 &(6) #h(2pt) #text(red)[T] -> #text(red)[B] #text(red)[B] " | " #text(red)[B] #text(red)[B] #text(red)[B]
 $
@@ -504,15 +504,15 @@ Damit Flaci nicht allzuviel zu tun hat verwenden wir zum Testen nur die Emailadr
 
 Wie bereits in einem Hinweis erwähnt gibt es eine weitere übliche Notationsform, die *erweiterte Backus-Naur-Form*. Es gelten die folgenden Regeln (Auszug der für uns Wichtigsten):
 
-1. Alle Regeln haben die Form #text(red)[*$<$Nichtterminal$> = #dots$ ;*]
+1. Alle Regeln haben die Form #text(red)[*$<$Nichtterminal$> = dots.down$ ;*]
 2. Aneinanderreihungen mit #text(red)[,] (kann weggelassen werden)
 3. Oder-Symbol #text(red)[$|$]
 4. Terminalsymbole werden in Anführungszeichen oder Apostrophe gesetzt. 
-5. *Optionen* werden in eckige Klammern gesetzt #text(red)[$[#dots]$]
-6. *Gruppierung von Elementen*: #text(red)[(#dots)]
-7. *Wiederholung* (auch Null mal): #text(red)[${#dots}$]
+5. *Optionen* werden in eckige Klammern gesetzt #text(red)[$[dots.down]$]
+6. *Gruppierung von Elementen*: #text(red)[(dots.down)]
+7. *Wiederholung* (auch Null mal): #text(red)[${dots.down}$]
 8. *Mehrfachausführung*: #text(red)[$3^*X$]
-9. *Ausschluss*: #text(red)[$#dots - X$]
+9. *Ausschluss*: #text(red)[$dots.down - X$]
 
 Die Apostrophe bei Zeichen sind insbesondere deswegen wichtig, um Zeichen der EBNF-Notation von der Verwendung innerhalb der Zeichenkette zu unterscheiden, so hat das "="-Zeichen untenstehend zwei verschiedene Bedeutungen - der Beginn der Regel und die Verwendung als tatsächliches Zeichen
 
@@ -531,13 +531,13 @@ Im Folgenden finden sich einige Beispiele, um die EBNF-Regeln zu veranschauliche
     [#text(red)[Anfang] $ = [$'A' $|$ 'B'$]$ 'C';], [*AC* oder *BC* oder *C*],
     [#text(red)[Mitte] $=$ 'A' $($ 'X' $|$ 'Y' | #var$)$;], [*AX* oder *AY* oder *A#var*],
     [#text(red)[Ende]= $3^*$ #text(red)[Baum] 'Z';], [*#text(red)[Baum Baum Baum] Z*], 
-    [#var $=$ 'A'${$'B' 'C' $}$ 'D';], [*AD* oder *ABCD* oder *ABCBCD* oder #dots], 
+    [#var $=$ 'A'${$'B' 'C' $}$ 'D';], [*AD* oder *ABCD* oder *ABCBCD* oder dots.down], 
     [#text(red)[Text] $=$ 'X' ${$#var$} -$ #var ;], [*X* oder *X #var #var* oder *X #var #var #var*]
 )
 #v(0.25cm)
 #task(customTitle: [_Aufgaben_])[Schreiben Sie die Produktionsregeln in EBNF- Form für die folgenden umgangssprachlich beschriebenen Zeichenketten (jeweils ggf. mit den bisher gemachten Vereinfachungen)
 1. Natürliche Zahlen 
-2. alle Vielfachen von 5 (also 5,10,15,#dots)
+2. alle Vielfachen von 5 (also 5,10,15, $dots.down$)
 3. Ganze Zahlen
 4. Dezimalzahlen
 5. geradzahlige Binärzahlen
@@ -554,25 +554,25 @@ Die Lösungen finden sich ab der nächsten Seite.
 *Natürliche Zahlen*:
 
 $ &(1) #text(red)[Nat] = #Z { #Z " | '0'"};\
-&(2) #h(2pt)#Z = "'1'| " #dots " |'9'";
+&(2) #h(2pt)#Z = "'1'| " dots.down " |'9'";
   $
 
 *Alle Vielfachen von 5*:
 
 $ &(1) #zahl = "'5'" | #Z " "{#Z "| '0'"} " "("'0'|'5'");\
-&(2) #h(2pt)#Z = "'1'| " #dots " |'9'";
+&(2) #h(2pt)#Z = "'1'| " dots.down " |'9'";
  $
 
 *Ganze Zahlen*:
 
 $ &(1) #text(red)[Ganz]= "'0' | ['-']" #Z " "{#Z" | '0'"};\
-&(2) #h(2pt)#Z = "'1'| " #dots " |'9'";
+&(2) #h(2pt)#Z = "'1'| " dots.down " |'9'";
  $
 
 *Dezimalzahlen*:
 
 $ &(1) #text(red)[Dezi]= "['-'] ('0'|" #Z{ #Z"|'0'"})"','"{#Z"|'0'"} #Z ";" \
-&(2) #h(2pt)#Z = "'1'| " #dots " |'9'";
+&(2) #h(2pt)#Z = "'1'| " dots.down " |'9'";
  $
 
 
@@ -589,7 +589,7 @@ $ &(1) #text(red)[Wort]= " 'x'[['y']'z'];" $
 *Natürliche Zahlen mit Tausenderpunkten*
 
 $ &(1) #zahl = #E [#Z] [#Z] {"'.'"3^* #Z}";" \
-&(2) #h(2pt)#E = "'1'| " #dots " |'9';" \
+&(2) #h(2pt)#E = "'1'| " dots.down " |'9';" \
 &(3) #h(2pt)#Z = #Z "|'0';"
  $
 
@@ -600,8 +600,8 @@ $ &(1) #text(red)[Adresse] = #text(red)[Benutzer] "'@'" #text(red)[Domäne] ; \
 &(3) #text(red)[Domäne] = #text(red)[Unterdomäne] { #text(red)[Unterdomäne]} #text(red)[TLD] ; \
 &(4) #text(red)[TLD] = #text(red)[B] #text(red)[B] [#text(red)[B]]; \
 &(5) #text(red)[Unterdomäne]= 2^* ( #Z | #text(red)[B]) " " {#Z | #text(red)[B]}"'.'"; \
-&(6) #h(2pt)#Z "'0'| " #dots " |'9';" \
-&(7) #h(2pt)#text(red)[B] "'a'| " #dots " | 'z';"
+&(6) #h(2pt)#Z "'0'| " dots.down " |'9';" \
+&(7) #h(2pt)#text(red)[B] "'a'| " dots.down " | 'z';"
  $
 #pagebreak()
 *Terme*
@@ -686,7 +686,7 @@ Um die Unterschiede der Sprachen besser beleuchten zu können, ist eine allgemei
 
 1. der endlichen _Variablenmenge V (Nonterminale)_,
 2. dem endlichen _Terminalalphabet_ $Sigma$ mit $V sect Sigma = emptyset $
-3. der endlichen Menge _P_ von _produktionen (Regeln)_ und 
+3. der endlichen Menge _P_ von _Produktionen (Regeln)_ und 
 4. der _Startvariablen S_ mit $ S in V$.
 
 Jede Produktion aus _P_ hat die Form $l -> r$ mit $l in (V union Sigma)^+$ und $r in (V union Sigma)^*$ (#cite(<hoffmann>), S. 164).
@@ -705,7 +705,7 @@ Damit lässt sich die Klassifikation mit Leben füllen (#cite(<hoffmann>), S. 16
 
 *Beispiele* (#cite(<hoffmann>), S. 169ff.)
 
-1. $L_3 := {(\a\b)^n | n in NN^+}$ ist eine *reguläre Sprache*. #hinweis[Der Exponent steht hier für eine Wiederholung, d.h. hier betrachten wir Wörter wie $\a\b, \a\b\a\b, #dots$] Mögliche Produktionsregeln sind: $ &(1) #h(2pt) S -> \a\B \ &(2)#h(2pt) B -> \b \ &(3) #h(2pt) B -> \bC \ &(4) #h(2pt)C -> \a\B $ \ Ableitung von $\a\b\a\b$: $ S ->^((1)) \aB ->^((3)) \a\b\C ->^((4)) \a\b\a\B ->^((2)) \a\b\a\b $ Das Wort wird also von links nach rechts "aufgebaut". Man spricht deswegen auch von einer "*rechts-linearen Grammatik*".
+1. $L_3 := {(\a\b)^n | n in NN^+}$ ist eine *reguläre Sprache*. #hinweis[Der Exponent steht hier für eine Wiederholung, d.h. hier betrachten wir Wörter wie $\a\b, \a\b\a\b, dots.down$] Mögliche Produktionsregeln sind: $ &(1) #h(2pt) S -> \a\B \ &(2)#h(2pt) B -> \b \ &(3) #h(2pt) B -> \bC \ &(4) #h(2pt)C -> \a\B $ \ Ableitung von $\a\b\a\b$: $ S ->^((1)) \aB ->^((3)) \a\b\C ->^((4)) \a\b\a\B ->^((2)) \a\b\a\b $ Das Wort wird also von links nach rechts "aufgebaut". Man spricht deswegen auch von einer "*rechts-linearen Grammatik*".
 2. $L_2 := {a^n b^n | n in NN^+}$ ist eine *kontextfreie Sprache*, aber nicht regulär. Die Sprache ist nicht mehr regulär, da wir in irgendeiner Form "zählen" müssten, wie viele a's es gibt, bevor die b's beginnen. Das ist mit den Regeln für reguläre Grammatiken nicht möglich. \ Eine mögliche Produktionsregel ist: $ &(1) #h(2pt) S -> \a\S\b | \a\b $ 
 3. $L_1 := {a^n b^n c^n | n in NN^+}$ ist eine *kontextsensitive Sprache*, aber nicht kontextfrei. Der Unterschied liegt darin, dass wir auch Terminalsymbole auf die linke Seite der Produktionsregeln packen können. Dadurch können wir die Regel abhängig von der *Umgebung* (also dem Kontext) des Nichtterminalsymbols machen, die Grammatik wird etwas länglich: $ &(1) #h(2pt) S -> \S\A\BC | \a\b\c \ &(2) #h(2pt) \C\A -> \AC \ &(3) #h(2pt) \C\B -> \B\C  \ &(4) #h(2pt) \BA -> \AB \ &(5) #h(2pt) \cA -> \Ac \ &(6) \cB -> \Bc \ &(7) #h(2pt) \bA -> \Ab \ &(8) #h(2pt) \aA -> \aa \ &(9) #h(2pt) \bB -> \bb \ &(10)#h(2pt) \cC -> \cc $ Eine Ableitung des Wortes $\a\a\a\b\b\b\c\c\c$ ist dem geneigten Lesy zur Übung überlassen :).
 4. $L_0 := {omega | omega " codiert eine terminierende Turing-Maschine"}$ ist eine *Typ-0-Sprache*, aber keine *kontextsensitive Sprache*. Eine explizite Grammatik für diese Sprache anzugeben ist schwer, deswegen wird an dieser Stelle darauf verzichtet. 
@@ -728,7 +728,7 @@ Dieser Automat akzeptiert alle Wörter der Sprache $L_3 := {(\a\b)^n | n in NN^+
 
 Formal definiert sich ein Automat wie folgt:
 
-#definition[Ein deterministischer endlicher Automat lässt wird durch die folgenden Angaben festgelegt: 
+#definition[Ein deterministischer endlicher Automat wird durch die folgenden Angaben festgelegt: 
 
 1. *Q*: eine endliche Menge von *Zuständen* 
 2. *$Sigma$*: eine endliche Menge von Eingabesymbolen (unser *Alphabet*!)

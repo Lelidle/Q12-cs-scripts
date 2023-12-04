@@ -11,8 +11,9 @@
     #set text(
     font: "Times New Roman"
     )
-    #show link: underline 
+    #show link: underline
     #show link: set text(blue)
+    #set text(lang: "de")
     #set raw(theme: "halcyon.tmTheme")
     #show raw: it => block(
         fill: rgb("#1d2433"),
@@ -118,18 +119,18 @@
     )
 }
 
-#let hinweis(body, customTitle: [*_Hinweis_*]) = {
+#let hinweis(body, customTitle: [*_Hinweis_*], color: rgb("FFFF99"), border-color: rgb("FFDD33")) = {
     showybox(
         title-style: (
-            color:black, 
+            color:black,
             sep-thickness: 0pt,
         ),
         frame: (
-            border-color: rgb("FFDD33"),
+            border-color: border-color ,
             thickness: (left:4pt),
             radius: 0pt,
-            title-color:rgb("FFFF99"),
-            body-color:rgb("FFFF99")
+            title-color:color,
+            body-color:color
         ),
         title: customTitle,
         [

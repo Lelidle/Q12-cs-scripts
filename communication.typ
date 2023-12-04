@@ -8,7 +8,6 @@
 )
 
 
-
 #let hm = h(1mm)
 
 #v(1fr)
@@ -34,7 +33,7 @@ Das *Internet* entstand primär aus dem 1969 entwickelten ARPANET (Advanced Rese
 
 In der Folge wurden vor allem weitere Universitäten in Europa und den USA in Netzwerken miteinander verknüpft bis die Technologie so weit ausgereift war, dass es zu einer regelrechten Explosion kam, die dazu führte, dass die meisten technischen Geräte heute miteinander *physikalisch* verbunden sind.
 
-Das *World Wide Web* ist in den 80er Jahren am CERN (Conseil européen pour la recherche nucléaire) entwickelt werden und _nicht_ synonym zum Internet zu verstehen. Spricht man vom Internet, dann ist primär die physikalische Verbindung, d.h. die Hardware der Netzwerke gemeint. Das WWW ist jedoch ein Dienst, d.h. eine Software. Die Grundlage bilden dabei aufeinander verweisende Hypertext-Dokumente, die auf verschiedensten Rechnern abgespeichert sind. Das WWW benutzt also das Internet als Medium, ist jedoch nur einer von vielen Diensten, die das tun. Weitere Beispiele für Dienste sind *E-Mails*, *FTP* (File Transfer Protocol), *HTTP* (Hyper-Text-Transfer-Protocol) oder das *XMPP* (Extensible Messaging and Presence Protocol - für Chat-Anwendungen).
+Das *World Wide Web* ist in den 80er Jahren am CERN (Conseil européen pour la recherche nucléaire) entwickelt worden und _nicht_ synonym zum Internet zu verstehen. Spricht man vom Internet, dann ist primär die physikalische Verbindung, d.h. die Hardware der Netzwerke gemeint. Das WWW ist jedoch ein Dienst, d.h. eine Software. Die Grundlage bilden dabei aufeinander verweisende Hypertext-Dokumente, die auf verschiedensten Rechnern abgespeichert sind. Das WWW benutzt also das Internet als Medium, ist jedoch nur einer von vielen Diensten, die das tun. Weitere Beispiele für Dienste sind *E-Mails*, *FTP* (File Transfer Protocol), *HTTP* (Hyper-Text-Transfer-Protocol) oder das *XMPP* (Extensible Messaging and Presence Protocol - für Chat-Anwendungen).
 
 Im Abitur spielt die Netzwerktechnik nur eine sehr untergeordnete Rolle. Dieses Skript ist deswegen deutlich ausführlicher, als es sein müsste, um dennoch einen groben Überblick über die Zusammenhänge zu geben. Im Anhang finden sich einige Abituraufgaben der letzten Jahre.
 
@@ -54,7 +53,7 @@ colspanx(10)[*Zweierpotenzen für die Umrechnung*],[512],[256],[128],[64],[32],[
 
 Wollen wir eine Zahl im Binärsystem darstellen, so sucht man immer die größte Zweierpotenz, die gerade noch in den zu füllenden "Rest" der Zahl hineinpasst und markiert in der Stellenwerttafel dort eine $1$.
 
-Wollen wir beispielsweise $147$ in Binärdarstellung beginnen wir bei $128 = 2^7$. Damit wissen wir auch, dass die Binärzahl $8$ Zeichen lang ist (wir beginnen bei $2^0=1$!):
+Wollen wir beispielsweise $147$ in Binärdarstellung, beginnen wir bei $128 = 2^7$. Damit wissen wir auch, dass die Binärzahl $8$ Zeichen lang ist (wir beginnen bei $2^0=1$!):
 $ 1000#hm 0000 $
 (Das wäre jetzt nur 128!). Als nächstes betrachten wir den Rest, also $147 - 128 = 19$ Die größte Zweierpotenz, die noch passt ist $16 = 2^4$. Es folgt also eine 1 an fünfter Stelle:
 $ 1001#hm 0000 $
@@ -166,7 +165,7 @@ Die Farbgebung in obiger Tabelle soll bereits andeuten, dass einige der Schichte
 3. #text(rgb(0, 128, 255))[*Transportschicht*]: s.o.
 4. #text(rgb(255, 102, 0))[*Anwendungsschicht*]: Hier unterscheiden wir nicht im Detail wie im OSI-Modell, sondern fassen die entsprechenden anwendungsorientierten Aufgaben in einer Schicht zusammen.
 
-Im Abitur beziehen sich fast alle Aufgaben, die nur Netzwerktechnik gestellt werden auf ein Schichtenmodell. Dabei wird allerdings eher selten ein technisches Modell gewählt, sondern eine Analogie (wie das diplomatische Protokoll oben).
+Im Abitur beziehen sich fast alle Aufgaben, die zur Netzwerktechnik gestellt werden auf ein Schichtenmodell. Dabei wird allerdings eher selten ein technisches Modell gewählt, sondern eine Analogie (wie das diplomatische Protokoll oben).
 
 Aus diesem Grund folgt hier ein nicht-technisches Beispiel für ein Schichtenmodell, das den Versand eines Pakets von unserem Schulleiter zum Schulleiter des Albert-Einstein-Gymnasiums in München modelliert:
 
@@ -347,7 +346,7 @@ Datenpakete müssen heute ihren Weg durch das Netzwerk finden, um zum entspreche
 Für die Weiterleitung von Datenpaketen ist die IP-Adresse geeigneter als die MAC-Adresse, da wir Subnetze zusammenfassen können. Würden nur MAC-Adressen zur Weiterleitung benutzt, so müssten immer alle MAC-Adressen, die erreichbar sind, überall auf dem Weg gespeichert werden. Dies ist mit IP nicht der Fall, da in der Routingtabelle (über die ein Netzwerkgerät i.d.R. verfügt) am Besten passende IP-Adressbereich gesucht wird und das Paket dorthin weitergeleitet wird.
 
 #hinweis[*Für die Experten*:
-1. streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass IP-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner MARC-Adresse.
+1. streng genommen erlaubt die Netzwerkadressübersetzung (NAT), dass IP-Adressbereiche mehrfach verwendet werden, da sie "nach außen" hin nur mit der IP-Adresse des Zugangsgeräts (also des Routers) identifiziert werden. Global gesehen ist also auch ein Netzwerkadapter nicht eindeutig mit einer IP-Adresse verknüpft, sondern mit seiner MAC-Adresse.
 2. Es gibt zwei weitere Protokolle, die im Detail "vernünftige" Wege durch das Netz finden, nämlich *OSPF* (dieses verwendet auch den Dijkstra Algorithmus! siehe 11.) und *BGP*]
 
 Zur besseren Lesbarkeit wird die Adresse üblicherweise in vier 8-stellige Blöcke aufgeteilt (also in 4 Byte Blöcke) und (für den Menschen) dann in Dezimalschreibweise abgebildet - jeweils durch einen Punkt getrennt.
@@ -396,9 +395,9 @@ $ 84.39.64.0 = #text(red)[xxxx #hm xxxx . xxxx #hm xxxx . #hm xxx]"x" #hm "xxxx.
 
 #task(customTitle: "Kurze Denkaufgabe")[Wie viele Adressen umfasst damit der Adressblock aus dem Beispiel, d.h. wie viele Adressen kann der Kunde hier nutzen]
 
-Da 13 Bit für den Kunden verfügbar sind, kann er $2^(13)$ Adressen verwenden, also alle Adressen von $94.39.64.0$ bis $84.39.95.255$
+Da 13 Bit für den Kunden verfügbar sind, kann er $2^(13)$ Adressen verwenden, also alle Adressen von $98.39.64.0$ bis $84.39.95.255$
 
-#hinweis[*Für die Experten*: Stren genommeng sind nur $2^13 - 2$ Adressen verwendbar, da es zwei "spezielle" Adressen gibt:
+#hinweis[*Für die Experten*: Streng genommen sind nur $2^13 - 2$ Adressen verwendbar, da es zwei "spezielle" Adressen gibt:
 1. Sind alle schwarzen x gleich 0, dann spricht man von der *Network Identifier Adress*, die zur Identifizierung des Netzwerks verwendet wird.
 2. Sind alle schwarzen x gleich 1, dann spricht man von der *Broadcast Adress* - Datenpakete, die an diese Adresse gehen werden kopiert und zu allen Adressen im Netzwerk weitergeleitet. ]
 
@@ -493,7 +492,7 @@ Das *Transmission Control Protocol* verlangt eine Verbindung zwischen zwei festg
 
 Möchte man via TCP eine Verbindung zu einem bestimmten Dienst - also z.B. auf einem Server irgendwo im Internet - aufbauen, dann sind vier Informationen notwendig:
 1. Die eigene IP-Adresse, also die der Quelle der Anfrage.
-2. Der eigene *Port* (siehe unten).
+2. Der eigene *Port* (siehe oben).
 3. Die IP-Adresse des Ziel-Rechners.
 4. Der Port, der auf dem Zielrechner angesteuert werden soll.
 
@@ -530,13 +529,13 @@ Ein typischer Ablauf sieht dabei wie folgt aus:
 
 == DNS-Protokoll
 
-Um die Übersetzung von URLS in IP-Adressen möglich zu machen gibt es das *DNS*-Protokoll (Domain Name System). Hierbei handelt es sich um ein globales Netzwerk an Servern, die die "Adressen", die für das Internet relevant sind speichern und auf Anfrage versenden (z.B. unterhält Google einen DNDS-Server, der unter der IP-Adresse 8.8.8.8 erreichbar ist. Ein weiterer beliebter DNS-Server ist 1.1.1.1 von Cloudflare. Legt man mehr Wert auf Privatsphäre, so empfiehlt sich beispielsweise der DNS Server 9.9.9.9)
+Um die Übersetzung von URLS in IP-Adressen möglich zu machen gibt es das *DNS*-Protokoll (Domain Name System). Hierbei handelt es sich um ein globales Netzwerk an Servern, die die "Adressen", die für das Internet relevant sind, speichern und auf Anfrage versenden (z.B. unterhält Google einen DNDS-Server, der unter der IP-Adresse 8.8.8.8 erreichbar ist. Ein weiterer beliebter DNS-Server ist 1.1.1.1 von Cloudflare. Legt man mehr Wert auf Privatsphäre, so empfiehlt sich beispielsweise der DNS Server 9.9.9.9)
 
 Tippt man nun eine URL in die Adresszeile ein, so laufen folgende Schritte ab:
 
 1. Der Browser prüft, ob die Adresse bereits im lokalen *Cache* hinerlegt ist.
 2. Falls nein, wird eine Anfrage an den vom Internetanbieter (ISP) bereitgestellten *Router* geschickt - auch dieser hat einen Cache.
-3. Falls auch dieser nicht weiterweis, wird eine Anfrage an den vom ISP verwendeten *DNS-Server* gestellt.
+3. Falls auch dieser nicht weiterweiß, wird eine Anfrage an den vom ISP verwendeten *DNS-Server* gestellt.
 4. Die meisten (üblichen) Seiten sind dort hinterlegt. Falls aber immer noch keine IP-Adresse gefunden werden kann, wird weiter eskaliert - Interessierte können an dieser Stelle weiterrecherchieren!
 5. Die Adresse wird zurückgesendet und kann jetzt für einen Verbindungsaufbau verwendet werden.
 
@@ -554,9 +553,9 @@ Auch hier könnte man deutlich tiefer in Details eintauchen, die aus Zeitgründe
 
 = Organisationen
 
-Es gibt mehrere Organisationen, die mit der *"Verwaltung"* des Internets beschätigt sind:
+Es gibt mehrere Organisationen, die mit der *"Verwaltung"* des Internets beschäftigt sind:
 1. #text(red)[*ICANN*]: Internet Corporation for Assigned Names and Numbers \ Diese Organisation koordiniert die Vergabe von einmaligen Namen und Adressen im Internet. Dazu gehören insbesondere die Koordination des Domain Name Systems und die "IANA-Funktion" (Internet Assigned Names and Numbers).
-2. #text(red)[*Réseaux IP Européens Network Coordination Centre*] \ Eine ähnliche Organisation, die aber speziell für Europa, den Nahen osten und Teile von Zentralasien zuständing ist.
+2. #text(red)[*Réseaux IP Européens Network Coordination Centre*] \ Eine ähnliche Organisation, die aber speziell für Europa, den Nahen Osten und Teile von Zentralasien zuständing ist.
 3. #text(red)[*IETF*]: Internet Engineering Task Force \ Hier wird im Wesentlichen die technische Weiterentwicklung des Internets vorangetrieben.
 4. #text(red)[*IEEE*]: Ein Berufsverband von Ingenieuren und Technikern, die sich mit der Standardisierung der Netzwerktechnik beschäftigen.
 
