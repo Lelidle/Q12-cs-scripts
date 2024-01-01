@@ -7,17 +7,13 @@ class UnsafeBankAccount {
         balance = initialBalance;
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount, int counter) {
         balance += amount;
-        System.out.println("Deposited: " + amount + ", Current Balance: " + balance);
+        System.out.println("Deposited: " + amount + ", Current Balance: " + balance + " by Fred " + counter);
     }
 
-    public void withdraw(double amount) {
-        if (balance >= amount) {
-            balance -= amount;
-            System.out.println("Withdrawn: " + amount + ", Current Balance: " + balance);
-        } else {
-            System.out.println("Insufficient funds.");
-        }
+    public void withdraw(double amount, int counter) {
+            balance += amount;
+            System.out.println("Withdrawn: " + amount + ", Current Balance: " + balance + " by Fred " + counter);
     }
 }

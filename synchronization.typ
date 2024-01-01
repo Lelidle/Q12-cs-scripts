@@ -83,8 +83,11 @@ public class RunnableExample {
             t[i].start();
         }
         for (int i = 0; i < t.length; i++) {
-            //Der Main-Thread wartet bis die gestarteten Threads fertig sind.
-            //join() darf nie im selben for wie start() stehen!
+            /*Der Main-Thread wartet bis die gestarteten Threads fertig sind.
+            join() darf nie im selben for wie start() stehen! Es wäre für
+            unser Minimalbeispiel auch gar nicht notwendig, wenn man aber
+            Ergebnisse aller Threads abwarten möchte, muss sichergestellt
+            werden, dass alle Threads fertig sind! */
             try {
                 t[i].join();
             //Notwendig damit das Programm nicht "abstürzt",
@@ -128,9 +131,7 @@ Zu diesem Zeitpunkt passiert allerdings noch gar nichts, da die Threads erst *ge
 
     Führt man das Programm aus, so ergibt sich beispielsweise die nebenstehende Ausgabe. Insgesamt sind es natürlich 100 Zeilen auf der Konsole, da 10 Threads jeweils 10 mal ihre Hallo-Nachricht schreiben.
 
-    Man kann deutlich erkennen, dass die Reihenfolge wild durchgemischt ist, beispielsweise schreibt Thread Nummer 6 zweimal in Folge, Thread Nummer 4 dagegen kommt in der Liste gar nicht vor.
-
-    Die genaue Struktur der Ausgabe lässt sich nicht vorhersagen.
+    Man kann deutlich erkennen, dass die Reihenfolge wild durchgemischt ist, beispielsweise schreibt Thread Nummer 6 zweimal in Folge, Thread Nummer 4 dagegen kommt in der Liste gar nicht vor. Die genaue Struktur der Ausgabe lässt sich nicht vorhersagen.
     ], [
 ```terminal
 Hello from Thread 8
@@ -165,6 +166,7 @@ Ein Thread (auch *Aktivitätsfaden* genannt) kann die folgenden Zustände haben:
 
 Das obige Zustandsdiagramm soll nur einen Überblick verschaffen, es ist für uns im Detail nicht relevant.
 
+#v(1cm)
 
 === Custom Threads
 
@@ -194,7 +196,7 @@ public class ThreadExample {
 }
 ```
 ]
-#pagebreak()
+
 #align(center)[
 ```java
 class MyThread extends Thread {
@@ -213,7 +215,7 @@ class MyThread extends Thread {
 }
 ```
 ]
-Die beiden Varianten sind fast vollständig deckungsgleich, letztendlich gibt es in diesem Fall keinen deutlichen Vorteil einer Methode.
+Die beiden Varianten sind fast vollständig deckungsgleich, letztendlich gibt es in diesem Fall keinen deutlichen Vorteil einer Methode. Der Vorteil eines Custom Threads liegt jedoch darin, dass wir leichter an die berechneten Werte kommen, wenn wir sie nach dem Abschluss brauchen sollten.
 
 #hinweis(customTitle: "Hinweis für Experten")[Es gibt natürlich noch mehr Varianten, wie man in Java mit Threads umgehen kann, eine allgemeinere bzw. abstraktere Variante wäre die Verwendung des *ExecutorService*.]
 
@@ -222,13 +224,15 @@ Bislang hat unsere Implementierung noch keine sinnvolle Arbeit verrichtet. Das s
 
 Der Schultaschenrechner gibt bereits bei $70!$ auf und zeigt einen MathError an. Auch in Java müssen wir einige Vorkehrungen treffen, weder der Datentyp _Integer_ noch _long_ sind groß genug um Zahlen wie $50000!$ zu fassen. Für große Zahlen gibt es in Java eine eigene Klasse, den *_BigInteger_*.
 
+#pagebreak()
+
 Zunächst eine sequentielle Implementierung, die die Fakultät einiger großer Zahlen berechnet:
 
 #align(center)[
 ```java
 import java.math.BigInteger;
 
-public class FactorialsSequentiell {
+public class FactorialsBasic {
 
     public static void main(String[] args) {
         // Um die Implementierungen vergleichen zu können, wird die
@@ -240,19 +244,17 @@ public class FactorialsSequentiell {
         System.out.println("Execution took: " +
         (endTime - startTime)*Math.pow(10,-9) + " seconds");
     }
-```
-#v(1cm)
-```java
+
     private static void calculateFactorials() {
         int[] numbersToFactorial = {50000, 50001, 50002, 50003, 50004};
         // Für jede oben definierte Zahl wird die Fakultät berechnet
         for(int i : numbersToFactorial) {
             // und ausgegeben
-            System.out.println("Factorial of " + i + " is: " + faculty(i));
+            System.out.println("Factorial of " + i + " is: " + factorial(i));
         }
     }
 
-    private static BigInteger faculty(int number) {
+    private static BigInteger factorial(int number) {
         // BigInteger benutzt ein Enum, um auf die 1 zuzugreifen
         // Eine implizite Umwandlung ist hier nicht möglich.
         BigInteger result = BigInteger.ONE;
@@ -269,7 +271,7 @@ public class FactorialsSequentiell {
 
 Um diese Berechnungen zu beschleunigen können wir jetzt mehrere Threads verwenden und jedem Thread die Aufgabe geben, jeweils eine Fakultät zu berechnen.
 
-#task[Nutzen Sie die obige Vorlage (Schreiben auf die Konsole) und verändern Sie sie so, dass die Fakultäten berechnet werden. Die Lösung findet sich auf der nächsten Seite.]
+#task[Nutzen Sie die obige Vorlage (Schreiben auf die Konsole) und verändern Sie sie so, dass die Fakultäten parallel berechnet werden. Die Lösung findet sich auf der nächsten Seite.]
 
 #pagebreak()
 
@@ -302,7 +304,7 @@ public class FactorialsParallel {
         for (FactorialThread thread : threads) {
             thread.start();
         }
-        // Wait for threads to finish
+        // Wir warten darauf, dass alle Threads fertig werden
         for (FactorialThread thread : threads) {
             try {
                 thread.join();
@@ -481,7 +483,7 @@ Umgekehrt könnte es auch sein, dass eine Transaktion abgelehnt wird, obwohl eig
 
 Wir müssen also den Zugriff auf unsere Ressource _balance_ (die *ununterbrechbare Ressource*) also limitieren. Hier kommt der *Semaphor* ins Spiel.
 
-#definition(customTitle: "Semaphor")[Ein Semaphor ist eine Variable, deren Wert ausdrückt, ob der Zugriff auf eine gemeinsame Ressource aktuell verboten ist, weil ein anderer Prozess sie momentan benutzt, oder erlaubt ist, weil kein anderer Prozess sie gerade nutzt.]
+#definition(customTitle: "Semaphor")[Ein Semaphor ist eine Variable, deren Wert ausdrückt, ob der Zugriff auf eine gemeinsame Ressource aktuell verboten ist, weil ein anderer Prozess (oder mehrere andere Prozesse, je nachdem wie viele durch den Semaphor erlaubt sind, für uns immer 1!) sie momentan benutzt, oder erlaubt ist, weil kein anderer Prozess sie gerade nutzt.]
 
 Der Ablauf sieht also wie folgt aus:
 
@@ -598,7 +600,7 @@ Withdrawn: 200.0, Current Balance: 0.0
     ]
 )
 
-
+#v(0.5cm)
 
 === Bankkonto mit Monitor
 
@@ -646,7 +648,7 @@ class MonitorBankAccount {
 }
 ```
 
-#hinweis[Beide Konzepte - Monitor und Semaphor - setzen letztendlich dasselbe Prinzip um - den "Schutz" der gemeinsamen Ressource. Für unsere Zwecke ist die Verwendung des Monitors meistens zu bevorzugen, da es wesentlich weniger Aufwand bedeutet.]
+#hinweis[Beide Konzepte - Monitor und Semaphor - setzen letztendlich dasselbe Prinzip um - den "Schutz" der gemeinsamen Ressource. Für unsere Zwecke ist die Verwendung des Monitors meistens zu bevorzugen, da es wesentlich weniger Schreibaufwand bedeutet.]
 
 #pagebreak()
 
@@ -726,7 +728,7 @@ Es fehlen allerdings noch einige Begriffe, die weiter ausdifferenziert werden m�
 #pagebreak()
 
 === Aktives Warten
-Allgemein könnte der Code für die _insert_ Methode, also das Ablegen in unserem Stapel, naiv wie folgt aussehen, wenn wir davon ausgehen, dass die Attribute _amount_ und _maximum_ in usnerer Klasse definiert sind.
+Allgemein könnte der Code für die _insert_ Methode, also das Ablegen in unserem Stapel, naiv wie folgt aussehen, wenn wir davon ausgehen, dass die Attribute _amount_ und _maximum_ in unserer Klasse definiert sind.
 
 ```java
 //Wir verwenden einen Monitor:
@@ -759,19 +761,23 @@ public synchronized void insert() {
 
 Die Lösung findet sich auf der nächsten Seite.
 
+#pagebreak()
 
 Der Monitor ist für die gesamte Methode definiert, d.h. unsere Ressource _amount_ ist durch den Thread gesperrt, der darauf wartet (via _Thread.sleep()_), dass wieder Platz freigeschaufelt wird. Man spricht hier auch vom *aktiven Warten*, da immer wieder aktiv geprüft wird, ob die Bedingung noch gilt, anstatt ein Signal abzuwarten, dass die genutzte Ressource wieder frei ist. In unserem Fall kann kein anderes Objekt die _insert_ oder die _remove_ Methode aufrufen, da wir _Thread.sleep()_ innerhalb des Monitors aufrufen. Es wird also nie Platz auf unserem Stapel frei werden.
 
 Folglich müssen dafür sorgen, dass die Methode nicht nur einfach innerhalb des Monitors "schläft" und diesen aufrecht erhält, sondern wieder *freigibt* (und trotzdem noch auf das freigeben wartet).
 
-Möchte man weiterhin das *aktive Warten* benutzen, so muss das Warten in die Erzeuger-Klasse (also die Klasse der Objekte, die "ablegen" wollen) ausgelagert werden. Damit können dann andere Objekte weiterhin ablegen.
+Möchte man weiterhin das *aktive Warten* benutzen, so muss das Warten in die Erzeuger-Klasse (also die Klasse der Objekte, die "ablegen" wollen) ausgelagert werden. Damit können dann andere Objekte weiterhin konsumieren, d.h. aufnehmen, um Platz zu schaffen.
 
 #task[Geben Sie allgemeinen Quellcode für diese Umsetzung des aktiven Wartens an. Im Fall der Erzeuger Klasse genügt der Abschnitt des Codes, der für das Warten verantwortlich ist.]
 
+Die Lösung findet sich auf der nächsten Seite.
+
+#pagebreak()
 
 ```java
 //In unserer Speicher-Klasse
-public syncrhonized boolean insert() {
+public synchronized boolean insert() {
     if (amount == maximum) {
         return false;
     }
@@ -888,10 +894,9 @@ Auch für das passive Warten hier noch einmal zusammengefasst:
 
 === Abituraufgaben
 
-This chapter is currently under construction, just look at this kitten instead:
-#align(center)[
-#image("images/kitten.jpg", width: 50%)
-]
+Größere Aufgaben dieser Art finden sich in den letzten Jahren quasi nicht. Aus dem Jahr 2012 gibt es aber eine recht ausführliche Aufgabe zum aktiven Warten und dem Monitor.
+
+#task(customTitle: "Abitur 2012")[#image("images/abi12ev.png")]
 
 #pagebreak()
 
@@ -907,7 +912,7 @@ In diesem Kapitel beleuchten wir *Verklemmungen* noch etwas genauer.
 Das klassische "reale" Beispiel für eine Verklemmung hatten wir schon weiter oben: die Kreuzung bei der 4 Autos nahezu gleichzeitig ankommen.
 
 Auch hier könnte bei der Implementierung des Monitors einiges schief gehen - wenn wir die Rechts-Vor-Links Regel wörtlich nehmen könnte der Ablauf so aussehen: Auto A möchte die Kreuzung sperren, bemerkt aber Auto B und wartet, Auto B aber wartet auf Auto C, C wartet auf D und D auf A.
-],[#align(center)[#image("images/monitor.png", width: 85%)]]
+],[#align(center)[#image("images/deadlock.jpg", width: 85%)]]
 )
 
 #hinweis[Es gibt keinen "leichten" Weg aus dieser Situation wieder herauszukommen: deswegen ist in der Fahrschule hier auch *Kommunikation* angesagt!]
@@ -925,7 +930,6 @@ Meike schuldet Nadja 400€ und Nadja schuldet Meike umgekehrt 300€. Sie sprec
 Nach den Überweisungen sollten also auf Meikes Konto $M$ 400€ sein und auf Nadjas Konto $N$ 700€.
 ]]
 
-Wir haben bereits gesehen, dass es bei einer "naiven" parallelen Ausführung zu einer Inkonsistenz kommen kann, z.B.:
 #align(center)[
 #tablex(rows:(auto,)*9, columns: (auto,)*3, outset: 3pt,
 [*Schritt*], [*Prozess $M -> N$*], [*Prozess $N -> M$*],
@@ -939,7 +943,7 @@ Wir haben bereits gesehen, dass es bei einer "naiven" parallelen Ausführung zu 
 [8], [Zuweisung von $N=N'=1000€$], [fertig]
 )]
 
-Wir haben so Geld vermehrt, da die Kontostände $M = 400€$ und $N=1000€$ betragen. Gut für uns, aber schlecht für die Bank.
+Wir haben so Geld vermehrt, da die Kontostände $M = 400€$ und $N=1000€$ betragen. Gut für uns, aber schlecht für die Bank. Bei einer "naiven" parallelen Ausführung kommt es also zu Inkonsistenzen!
 
 Wir müssen also sicherstellen, dass der Zugriff auf $M$ bzw. $N$ wieder durch einen Semaphor oder Monitor geregelt wird. Leider kann damit immer noch z.B. folgendes Szenario auftreten:
 
@@ -959,7 +963,11 @@ Der Prozess $M -> N$ hat $N$ gesperrt und wartet auf $M$, was wiederum vom Proze
 
 Etwas allgemeiner:
 
-#definition[Eine *Verklemmung* kann auftreten, wenn mehrere Prozesse mehrere gemeinsame Ressourcen benutzen wollen. Es kann dann zu einem wechselseitigen Warten auf das Freigeben von Ressourcen kommen.]
+#definition[Eine *Verklemmung* kann auftreten, wenn die folgenden drei Voraussetzungen gegeben sind:
+1. Die gemeinsame Ressource kann nur durch den Prozess freigegeben werden, dass diese besitzt (Beim Semaphor kann auch ein anderer Prozess freigeben!)
+2. Jeder beteiligte Prozess muss versuchen mindestens zwei Sperren auf einmal zu bekommen.
+3. Es muss zu einer *zirkulären Abhängigkeit* kommen. Bei zwei beteiligten Prozessen also ein wechselseitiges Warten, bei mehr Prozessen können sich aber auch "Ringe" ergeben (wie bei den Autos weiter oben!)
+]
 
 Nachdem das Problem nun identifiziert ist bleibt natürlich noch die Frage:
 
@@ -1005,3 +1013,4 @@ Um Verklemmungen zu vermeiden, kann man...
 5. eine Art Timeout-Funktion einbauen]
 
 #task(customTitle: "Aufgabe 4 - Abi 23")[#image("images/abi23verklemmung.png")]
+

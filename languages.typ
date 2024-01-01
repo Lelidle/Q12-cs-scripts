@@ -248,20 +248,20 @@ In aller Regel werden bei Aufgaben zu Grammatiken nur die Produktionsregeln verl
 #task(customTitle: [_Aufgaben_])[
     #set enum(numbering: (..args) => strong(numbering("1.", ..args)))
     1. Definieren Sie die Produktionsregeln einer Grammatik, die die folgenden umgangssprachlichen Ausdrücke erzeugt. Geben Sie außerdem jeweils einen Ableitungsbaum für die Worte in Klammern an:
-        - Alle zweistelligen natürlichen Zahlen.
-        - Alle zweistelligen ganzen Zahlen.
-        - Alle höchstens zweistelligen ganzen Zahlen.
-        - Alle natürlichen Zahlen.
-        - Alle Wörter mit 4 Buchstaben, die mit "e" beginnen und mit "a" enden #hinweis[Als Alphabet sind nur die Kleinbuchstaben zugelassen, es müssen keine "sinn-vollen" Wörter im Sinne einer natürlichen Sprache sein.]
+        - Alle zweistelligen natürlichen Zahlen. (57)
+        - Alle zweistelligen ganzen Zahlen. (-17)
+        - Alle höchstens zweistelligen ganzen Zahlen. (-3)
+        - Alle natürlichen Zahlen. (1111)
+        - Alle Wörter mit 4 Buchstaben, die mit "e" beginnen und mit "a" enden (ente) #hinweis[Als Alphabet sind nur die Kleinbuchstaben zugelassen, es müssen keine "sinnvollen" Wörter im Sinne einer natürlichen Sprache sein.]
     #link(<LösungGrammatik1>)[Zur Lösung]
     2. Beschreiben Sie die Wörter der Sprache, die durch folgende Produktionsregeln erzeugt werden, umgangssprachlich: $ &(1) "Zahl" -> "'5'" "Ziffer" "Ende" | #h(2pt)epsilon \ 
     &(2) "Ziffer" -> "'"0"'"|"'"1"'"|"'"2"'"|"'"3"'"|"'"4"'"|"'"5"'"|"'"6"'"|"'"7"'"|"'"8"'"|"'"9"'" \
     &(3) "Ende" -> "'12' | '22'" $
     #link(<LösungGrammatik2>)[Zur Lösung]
     3. Geben Sie eine *vollständige* Grammatik für die folgenden Sprachen an: #hinweis[Sie können #link("https://flaci.com")[Flaci] zur Überprüfung nutzen]
-        - Symmetrische a-b-Ketten nach folgendem Muster: #align(center)[aba, aabaa, aaabaaa, aaaabaaaa,dots.down]
-        - Geradzahlige Zahlen in Binärdarstellung: $ 0, 10, 100, 110, 1000, 1010, 1100, 1110, dots.down $
-        - Natürliche Zahlen mit Tausenderpunkten: $ 1, 50, 375, 1.451, 100.105, 205.111.305 dots.down $
+        - Symmetrische a-b-Ketten nach folgendem Muster: #align(center)[aba, aabaa, aaabaaa, aaaabaaaa, $dots.c$]
+        - Geradzahlige Zahlen in Binärdarstellung: $ 0, 10, 100, 110, 1000, 1010, 1100, 1110, dots.c$
+        - Natürliche Zahlen mit Tausenderpunkten: $ 1, 50, 375, 1.451, 100.105, 205.111.305 dots.c $
     #link(<LösungGrammatik3>)[Zur Lösung]
     ]
 
@@ -1164,3 +1164,4 @@ Der logische nächste Schritt wäre nun also, ein Format zu finden, in dem der A
 
 
 #bibliography("bib.yml")
+

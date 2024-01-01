@@ -1,13 +1,11 @@
 package code.bankaccount;
 
 public class AccountTransactions {
-    final static int NUM_THREADS = 10;
-    final static double INITIAL_BALANCE = 1000;
+    final static int NUM_THREADS = 100;
+    final static double INITIAL_BALANCE = 10000;
 
-    public static void main(String[] args) {
-        //useUnsafe();
-        useSemaphor();
-        //useMonitor();
+    public static void main(String[] args) throws InterruptedException {
+        useUnsafeFirst();
     }
 
     private static void useUnsafe() {
@@ -17,9 +15,20 @@ public class AccountTransactions {
 
         for (int i = 0; i < NUM_THREADS; i++) {
             new Thread(() -> {
-                unsafeAccount.deposit(100);
-                unsafeAccount.withdraw(200);
+                //unsafeAccount.deposit(100);
+                //unsafeAccount.withdraw(200);
             }).start();
+        }
+    }
+
+    private static void useUnsafeFirst() {
+        UnsafeBankAccount unsafeAccount = new UnsafeBankAccount(INITIAL_BALANCE);
+        MyFred[] threads = new MyFred[NUM_THREADS];
+        for(int i = 0; i < NUM_THREADS; i++) {
+            threads[i] = new MyFred(unsafeAccount, i);
+        }
+        for(int i = 0; i < NUM_THREADS; i++) {
+            threads[i].start();
         }
     }
 
@@ -47,4 +56,27 @@ public class AccountTransactions {
         }
     }
 
+}
+
+class MyFred extends Thread {
+    private UnsafeBankAccount acc;
+    private int counter;
+
+    public MyFred(UnsafeBankAccount acc, int counter) {
+        this.acc = acc;
+        this.counter = counter;
+    }
+
+    public void run() {
+        System.out.println("Thread " + counter + " withdraws: ");
+        acc.withdraw(200, counter);
+        System.out.println("Thread " + counter + " deposits: ");
+        acc.deposit(100, counter);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

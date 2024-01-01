@@ -12,7 +12,7 @@ public class FactorialsParallel {
 
     private static void calculateFactorials() {
         // Numbers to calculate factorials
-        int[] numbersToFactorial = {50005, 50006, 50007, 50008, 50009}; 
+        int[] numbersToFactorial = {50000, 65000, 71000, 75000, 99999};
         FactorialThread[] threads = new FactorialThread[numbersToFactorial.length];
         // Create threads
         for (int i = 0; i < threads.length; i++) {

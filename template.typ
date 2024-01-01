@@ -15,12 +15,14 @@
     #show link: set text(blue)
     #set text(lang: "de")
     #set raw(theme: "halcyon.tmTheme")
-    #show raw: it => block(
+    #set enum(numbering: (..args) => strong(numbering("1.", ..args))) // in Aufzählungen Zahlen fett
+    /*#show raw: it => block(
         fill: rgb("#1d2433"),
         inset: 8pt,
         radius: 5pt,
         text(fill: rgb("#a2aabc"), it)
     )
+    */
     #doc
 ]
 
@@ -36,7 +38,6 @@
     c = [ $ #c $ ]
     c
 }
-
 
 #let definition(body, customTitle: "Definition", borderColor: rgb("4D4DFF")) = {
     showybox(
