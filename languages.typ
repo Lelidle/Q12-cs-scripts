@@ -252,7 +252,7 @@ In aller Regel werden bei Aufgaben zu Grammatiken nur die Produktionsregeln verl
         - Alle zweistelligen ganzen Zahlen. (-17)
         - Alle höchstens zweistelligen ganzen Zahlen. (-3)
         - Alle natürlichen Zahlen. (1111)
-        - Alle Wörter mit 4 Buchstaben, die mit "e" beginnen und mit "a" enden (ente) #hinweis[Als Alphabet sind nur die Kleinbuchstaben zugelassen, es müssen keine "sinnvollen" Wörter im Sinne einer natürlichen Sprache sein.]
+        - Alle Wörter mit 4 Buchstaben, die mit "e" beginnen und mit "a" enden (enta) #hinweis[Als Alphabet sind nur die Kleinbuchstaben zugelassen, es müssen keine "sinnvollen" Wörter im Sinne einer natürlichen Sprache sein.]
     #link(<LösungGrammatik1>)[Zur Lösung]
     2. Beschreiben Sie die Wörter der Sprache, die durch folgende Produktionsregeln erzeugt werden, umgangssprachlich: $ &(1) "Zahl" -> "'5'" "Ziffer" "Ende" | #h(2pt)epsilon \ 
     &(2) "Ziffer" -> "'"0"'"|"'"1"'"|"'"2"'"|"'"3"'"|"'"4"'"|"'"5"'"|"'"6"'"|"'"7"'"|"'"8"'"|"'"9"'" \
@@ -1161,6 +1161,7 @@ public static void main(String[] args) {
 Der logische nächste Schritt wäre nun also, ein Format zu finden, in dem der Automat schneller angegeben werden kann und dann einen Konverter zu schreiben, der diesen Prozess oben automatisiert - das überlasse ich aber dem geneigten Lesy zur Übung. Flaci z.B. kann in ein JSON-Format exportieren.
 
 #pagebreak()
+
 
 
 #bibliography("bib.yml")

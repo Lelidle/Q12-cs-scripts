@@ -731,29 +731,29 @@ Es fehlen allerdings noch einige Begriffe, die weiter ausdifferenziert werden m�
 Allgemein könnte der Code für die _insert_ Methode, also das Ablegen in unserem Stapel, naiv wie folgt aussehen, wenn wir davon ausgehen, dass die Attribute _amount_ und _maximum_ in unserer Klasse definiert sind.
 
 ```java
-//Wir verwenden einen Monitor:
+
+// Wir verwenden einen Monitor:
 public synchronized void insert() {
     if(amount == maximum) {
-        System.out.println("Storage is full! Waiting.")
-        //Wir prüfen jede halbe Sekunde, ob der Stapel noch voll ist, oder nicht
-        while(amount == max) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace()
-            }
-        }
-        //Falls der Stapel nicht mehr voll ist:
+        System.out.println("Storage is full! Waiting.");
+    //Wir prüfen jede halbe Sekunde, ob der Stapel noch voll ist, oder nicht
+    while(amount == maximum) {
         try {
-            //Wir warten eine zufällige Zeit, um das Ablegen zu simulieren
-            Thread.sleep((int) (Math.random*1000))
+            Thread.sleep(500);
         } catch (InterruptedException e) {
-                e.printStackTrace()
+            e.printStackTrace();
         }
-        //Wir erhöhen den Zähler
-        amount += 1;
     }
-
+    //Falls der Stapel nicht mehr voll ist:
+    try {
+        //Wir warten eine zufällige Zeit, um das Ablegen zu simulieren
+        Thread.sleep((int) (Math.random()*1000));
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    //Wir erhöhen den Zähler
+    amount += 1;
+}
 }
 ```
 
@@ -784,7 +784,7 @@ public synchronized boolean insert() {
     try {
         Thread.sleep((int) (Math.random*1000))
     } catch (InterruptedException e) {
-            e.printStackTrace()
+            e.printStackTrace();
     }
     amount += 1;
     return true;
@@ -795,7 +795,7 @@ while(!storage.insert()) {
     try {
         Thread.sleep(500);
     } catch (InterruptedException e) {
-        e.printStackTrace()
+        e.printStackTrace();
     }
 }
 ```
@@ -820,7 +820,7 @@ Die _wait_ Methode ist bereits in der _Object_ Klasse implementiert und somit ka
 try {
     wait();
 } catch (InterruptedException e) {
-    e.printStackTrace()
+    e.printStackTrace();
 }
 ```
 ]
@@ -836,17 +836,17 @@ public synchronized void insert() {
             //Wir verwenden wait() statt sleep()
             wait();
         } catch (InterruptedException e) {
-            e.printStackTrace()
+            e.printStackTrace();
         }
     }
     try {
         Thread.sleep((int) (Math.random*1000))
     } catch (InterruptedException e) {
-            e.printStackTrace()
+            e.printStackTrace();
     }
     amount += 1;
     //Alle anderen Threads werden ggf. aufgeweckt
-    notifyAll()
+    notifyAll();
     }
 
 }
@@ -871,16 +871,16 @@ public synchronized void insert() {
         try {
             wait();
         } catch (InterruptedException e) {
-            e.printStackTrace()
+            e.printStackTrace();
         }
     }
     try {
         Thread.sleep((int) (Math.random*1000))
     } catch (InterruptedException e) {
-            e.printStackTrace()
+            e.printStackTrace();
     }
     amount += 1;
-    notifyAll()
+    notifyAll();
     }
 }
 ```
